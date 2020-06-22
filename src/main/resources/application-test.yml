@@ -1,0 +1,78 @@
+# 开发环境配置
+debug: false
+server:
+  port: 8080 #tomcat运行端口
+
+spring:
+  datasource:
+    dynamic:
+      datasource:
+        #写库
+        master:
+          driver-class-name: oracle.jdbc.OracleDriver
+          url: jdbc:oracle:thin:@192.168.6.251:1521/dgioc
+          username: FYQGK
+          password: Ch#2020$
+          hikari:
+            minimum-idle: 1
+            maximum-pool-size: 10
+        #读库
+        reader:
+          driver-class-name: oracle.jdbc.OracleDriver
+          url: jdbc:oracle:thin:@192.168.6.251:1521/dgioc
+          username: FYQGK
+          password: Ch#2020$
+          hikari:
+            minimum-idle: 1
+            maximum-pool-size: 10
+      
+  redis:
+      # redis数据库索引（默认为0），我们使用索引为3的数据库，避免和其他数据库冲突
+      database: 3
+      # redis服务器地址（默认为localhost）
+      host: 192.168.6.251
+      # redis端口（默认为6379）
+      port: 6379
+      # redis访问密码（默认为空）
+      password: Chjy@0769
+      # redis连接超时时间（单位为毫秒）
+      timeout: 10000
+        
+  servlet: 
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 100MB
+
+ljdp:
+  ftpserver:
+    url: 120.77.146.174
+    port: 6021
+    mode: PASV
+    username: ftpchjykj
+    password: ljdp0769
+    remote-path: /
+    local-temp-path: /data/temp
+    localPath: ioc-datatag
+  dfs:
+    ftp2http-proxy: http://183.6.55.26:31075/ftp
+    ftp2http-download: http://183.6.55.26:31075/ljdp/dfs/downloadByFid.act?fid=
+  fileupload:
+    # 覆盖batch.fileupload.path配置
+    local-path: /data/file
+  security:
+    api:
+      skey: UQNiq15kVfbtFLe4J1uMl29rhmg0uvy4dxg0mGutHHw
+
+iocplatform:
+  url:
+    ioc-admin: http://219.135.182.3:30022
+#    ioc-admin: http://ioc-admin-svc:8080
+
+mybatis-plus:
+  global-config:
+    db-config:
+      db-type: oracle
+  configuration:
+    jdbc-type-for-null: null
+  mapper-locations: classpath:/mapper/*.xml
+

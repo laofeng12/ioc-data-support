@@ -1,0 +1,94 @@
+# 开发环境配置
+debug: true
+server:
+  port: 8080 #tomcat运行端口
+  servlet:
+    context-path: /
+
+spring:
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@nhc.smart-info.cn:8521/dgioc
+    username: datalake_rls
+    password: ch#123456
+    druid:
+      initial-size: 1
+      max-active: 100
+      min-idle: 1
+      max-wait: 20000 # 配置获取连接等待超时的时间
+      pool-prepared-statements: false
+      max-pool-prepared-statement-per-connection-size: 20
+      max-open-prepared-statements: 20 #和上面的等价
+      # validation-query: SELECT 'x'
+      validation-query: SELECT 'x' FROM DUAL
+      validation-query-timeout: 1
+      test-on-borrow: false
+      test-on-return: false
+      test-while-idle: true
+      filters: stat
+      
+  redis:
+      # redis数据库索引（默认为0），我们使用索引为3的数据库，避免和其他数据库冲突
+      database: 3
+      # redis服务器地址（默认为localhost）
+      host: 219.135.182.2
+      # redis端口（默认为6379）
+      port: 6379
+      # redis访问密码（默认为空）
+      password: Chjy@0769
+      # redis连接超时时间（单位为毫秒）
+      timeout: 10000
+      expire:
+        headerExpire:  #重点.....key不能带有特殊字符,必须符合变量的定意规范(字母,下划线,数字)
+          [SYS_VERIFYIMAGE]: 600 # 10分钟
+        # redis连接池配置
+        jedis:
+          pool:
+            # 最大可用连接数（默认为8，负数表示无限）
+            max-active: 8
+            # 最大空闲连接数（默认为8，负数表示无限）
+            max-idle: 8
+            # 最小空闲连接数（默认为0，该值只有为正数才有作用）
+            min-idle: 0
+            # 从连接池中获取连接最大等待时间（默认为-1，单位为毫秒，负数表示无限）
+            max-wait: 5000
+
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 100MB
+
+ljdp:
+  ftpserver:
+    url: 120.77.146.174
+    port: 6021
+    mode: PASV
+    username: ftpchjykj
+    password: ljdp0769
+    remote-path: /
+    local-temp-path: /Users/jianqingqiu/Desktop/temp
+    localPath: ioc-datatag
+  dfs:
+    ftp2http-proxy: http://183.6.55.26:31075/ftp
+    ftp2http-download: http://183.6.55.26:31075/ljdp/dfs/downloadByFid.act?fid=
+  fileupload:
+    # 覆盖batch.fileupload.path配置
+    local-path: E:\temp\redisFile #/Users/jianqingqiu/Desktop/temp/ftp
+  security:
+    api:
+      skey: UQNiq15kVfbtFLe4J1uMl29rhmg0uvy4dxg0mGutHHw
+
+ok:
+  http:
+    connect-timeout: 30
+    read-timeout: 30
+    write-timeout: 30
+    #连接池中整体的空闲连接的最大数量
+    max-idle-connections: 100
+    # 连接空闲时间最多为 300 秒
+    keep-alive-duration: 300
+
+#ljdp启动需要
+iocplatform:
+  url:
+    ioc-admin: http://219.135.182.2:31075
