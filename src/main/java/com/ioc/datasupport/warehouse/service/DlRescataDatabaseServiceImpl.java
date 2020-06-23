@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
@@ -54,9 +55,18 @@ public class DlRescataDatabaseServiceImpl extends ServiceImpl<DlRescataDatabaseM
     @Override
     public List<DlRescataDatabase> getRescataDataBasesShow() {
         List<DlRescataDatabase> rescataDataBaseList = dlRescataDatabaseService.getRescataDataBaseList();
-        rescataDataBaseList.forEach(item -> item.setDatabaseJsonInfo(null));
+        List<DlRescataDatabase> dbList = new LinkedList<>();
+        for (DlRescataDatabase database : rescataDataBaseList) {
+            DlRescataDatabase db = new DlRescataDatabase();
+            db.setDatabaseId(database.getDatabaseId());
+            db.setDatabaseName(database.getDatabaseName());
+            db.setRepositoryType(database.getRepositoryType());
+            db.setDatabaseType(database.getDatabaseType());
 
-        return rescataDataBaseList;
+            dbList.add(db);
+        }
+
+        return dbList;
     }
 
     @Override

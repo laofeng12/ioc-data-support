@@ -4,6 +4,7 @@ package com.ioc.datasupport.dataprovider.jdbc;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.pool.DruidDataSourceFactory;
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.base.Charsets;
 import com.google.common.base.Joiner;
 import com.google.common.base.Objects;
@@ -127,9 +128,9 @@ public class JdbcDataProvider extends DataProvider {
     }
 
     @Override
-    public AggregateResult queryTableData(List<String> columns, String tableName, String where, Pageable pageable) throws Exception {
+    public AggregateResult queryTableData(List<String> columns, String tableName, String where, Page page) throws Exception {
         columns = CollectionUtils.isEmpty(columns) ? Collections.emptyList() : columns;
-        String exec = this.getQueryTableDataSql(Joiner.on(",").skipNulls().join(columns), tableName, where, pageable);
+        String exec = this.getQueryTableDataSql(Joiner.on(",").skipNulls().join(columns), tableName, where, page);
         List<String[]> list = new LinkedList<>();
         boolean isOracle = this.getDatasource().getDatabaseType() == PublicConstant.DB_TYPE_INT_ORACLE;
 
@@ -345,7 +346,7 @@ public class JdbcDataProvider extends DataProvider {
      * @param where     条件
      * @return          sql语句
      */
-    protected String getQueryTableDataSql(String columns, String tableName, String where, Pageable pageable) {
+    protected String getQueryTableDataSql(String columns, String tableName, String where, Page page) {
         return "";
     }
 

@@ -18,18 +18,18 @@ import java.io.Serializable;
 //@Accessors(chain = true)
 public class ColumnInfo implements Serializable {
 
-    @ApiModelProperty("表字段ID,为空新增")
+    /*@ApiModelProperty("表字段ID,为空新增")
     @NotNull
-    private Long columnId;
+    private Long columnId;*/
 
     @ApiModelProperty(value = "字段列名",required = true)
     @Length(min=0, max=256)
     @NotBlank
     private String columnSource;
 
-    @ApiModelProperty(value = "是否更新字段：数值型ID主键或日期型",required = true)
+    /*@ApiModelProperty(value = "是否更新字段：数值型ID主键或日期型",required = true)
     @Value("false")
-    private Boolean isUpdateColumn;
+    private Boolean isUpdateColumn;*/
 
     @ApiModelProperty(value = "字段类型",required = true)
     @Length(min=0, max=32)
@@ -50,9 +50,9 @@ public class ColumnInfo implements Serializable {
     @NotNull
     private Integer columnScale;
 
-    @ApiModelProperty("默认值")
+    /*@ApiModelProperty("默认值")
     @Length(min=0, max=256)
-    private String defaultValue;
+    private String defaultValue;*/
 
     @ApiModelProperty(value = "是否主键（0否，1是）",required = true)
     private Boolean isPrimaryKey;
@@ -64,9 +64,9 @@ public class ColumnInfo implements Serializable {
     @Length(min=0, max=512)
     private String columnComment;
 
-    @ApiModelProperty(value = "排序",required = true)
+    /*@ApiModelProperty(value = "排序",required = true)
     @Max(99999999L)
-    private Integer sort;
+    private Integer sort;*/
 
     @ApiModelProperty("所属数据表名")
     private String belongTableName;

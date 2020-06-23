@@ -1,6 +1,7 @@
 package com.ioc.datasupport.dataprovider;
 
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ioc.datasupport.dataprovider.dto.ColumnInfo;
 import com.ioc.datasupport.dataprovider.dto.DatasourceInfo;
 import com.ioc.datasupport.dataprovider.dto.TableInfo;
@@ -81,10 +82,10 @@ public abstract class DataProvider {
      *
      * @param columns    列名集合
      * @param tableName  表名
-     * @param pageable   分页
+     * @param page       分页
      * @param where      where条件
      * @return           查询结果（数据+列名）
      * @throws Exception 异常
      */
-    public abstract AggregateResult queryTableData(List<String> columns, String tableName, String where, Pageable pageable) throws Exception;
+    public abstract AggregateResult queryTableData(List<String> columns, String tableName, String where, Page page) throws Exception;
 }

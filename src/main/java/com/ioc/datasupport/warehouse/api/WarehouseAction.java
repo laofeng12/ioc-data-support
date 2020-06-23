@@ -3,7 +3,9 @@ package com.ioc.datasupport.warehouse.api;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ioc.datasupport.common.MbpTablePageImpl;
+import com.ioc.datasupport.dataprovider.dto.ColumnInfo;
 import com.ioc.datasupport.dataprovider.dto.TableInfo;
+import com.ioc.datasupport.dataprovider.result.AggregatePageResult;
 import com.ioc.datasupport.warehouse.domain.DlRescataDatabase;
 import com.ioc.datasupport.warehouse.service.DlRescataDatabaseService;
 import com.ioc.datasupport.warehouse.service.WarehouseService;
@@ -88,4 +90,29 @@ public class WarehouseAction {
 
     // 查询物理表的数据 TODO 后期要考虑：脱敏、加密
 
+    @ApiOperation(value = "列信息", notes = "列信息", nickname = "columns")
+    @Security(session = false)
+    @RequestMapping(value = "/columns/{dbId}/{tableName}", method = RequestMethod.GET)
+    public DataApiResponse<ColumnInfo> getColumns(@PathVariable Long dbId, @PathVariable String tableName) throws Exception {
+        List<ColumnInfo> columnInfos = warehouseService.getTableColumn(dbId, tableName);
+        DataApiResponse<ColumnInfo> resp = new DataApiResponse<>();
+        resp.setRows(columnInfos);
+
+        return resp;
+    }
+
+    @ApiOperation(value = "表数据", notes = "表数据", nickname = "tableData")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "size", value = "每页显示数量", required = false, dataType = "int", paramType = "query"),
+        @ApiImplicitParam(name = "current", value = "页码", required = false, dataType = "int", paramType = "query"),
+    })
+    @Security(session = false)
+    @RequestMapping(value = "/tableData/{dbId}/{tableName}", method = RequestMethod.GET)
+    public DataApiResponse<AggregatePageResult> getTableData(@PathVariable Long dbId, @PathVariable String tableName, @ApiIgnore Page<TableInfo> page) throws Exception {
+        DataApiResponse<AggregatePageResult> resp = new DataApiResponse<>();
+        AggregatePageResult tableData = warehouseService.getTableData(dbId, tableName, page);
+        resp.setData(tableData);
+
+        return resp;
+    }
 }

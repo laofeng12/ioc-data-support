@@ -1,6 +1,7 @@
 package com.ioc.datasupport.dataprovider.jdbc;
 
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ioc.datasupport.dataprovider.annotation.ProviderName;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.Pageable;
@@ -42,7 +43,7 @@ public class PostgreSqlDataProvider extends JdbcDataProvider {
     }
 
     @Override
-    public String getQueryTableDataSql(String columns, String tableName, String where, Pageable pageable) {
+    public String getQueryTableDataSql(String columns, String tableName, String where, Page page) {
         StringBuilder sb = new StringBuilder();
         sb.append("select ");
         if (StringUtils.isNotBlank(columns)) {
@@ -58,11 +59,11 @@ public class PostgreSqlDataProvider extends JdbcDataProvider {
             sb.append(" where ");
             sb.append(where);
         }
-        if (pageable != null && pageable.getPageSize() != 0) {
+        if (page != null && page.getSize() != 0) {
             sb.append(" limit ");
-            sb.append(pageable.getPageSize());
+            sb.append(page.getSize());
             sb.append(" offset ");
-            sb.append(pageable.getOffset());
+            sb.append(page.getCurrent() - 1);
         }
 
         return sb.toString();
