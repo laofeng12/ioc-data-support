@@ -1,9 +1,10 @@
 package com.ioc.datasupport.conf;
 
-import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
+import com.ioc.datasupport.util.MD5Util;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.caffeine.CaffeineCacheManager;
+import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -30,5 +31,17 @@ public class CacheConfig {
                 .maximumSize(1000));
 
         return cacheManager;
+    }
+
+    @Bean(name = "keyGenerator")
+    public KeyGenerator keyGenerator() {
+        return (o, method, params) -> {
+            StringBuilder sb = new StringBuilder();
+            for (Object obj : params) {
+                sb.append(obj.toString());
+            }
+
+            return MD5Util.getMD5(sb.toString(), false, 32);
+        };
     }
 }

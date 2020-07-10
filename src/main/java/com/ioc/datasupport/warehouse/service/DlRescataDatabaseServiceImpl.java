@@ -37,7 +37,7 @@ public class DlRescataDatabaseServiceImpl extends ServiceImpl<DlRescataDatabaseM
     private DlRescataDatabaseService dlRescataDatabaseService;
 
     @Override
-    @Cacheable
+    @Cacheable(sync = true)
     public List<DlRescataDatabase> getRescataDataBaseList() {
         DlRescataDatabaseParam<DlRescataDatabase> param = new DlRescataDatabaseParam<>();
         ArrayList<Long> idList = Lists.newArrayList( 3L, 5L, 7L, 9L);

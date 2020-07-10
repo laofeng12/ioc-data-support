@@ -38,7 +38,7 @@ public class WarehouseServiceImpl implements WarehouseService {
     private WarehouseService warehouseService;
 
     @Override
-    @Cacheable(key = "#dbId")
+    @Cacheable(key = "#dbId", sync = true)
     public List<TableInfo> getTableList(@NotNull Long dbId) throws Exception {
         DlRescataDatabase dbInfo = dlRescataDatabaseService.getRescataDataBaseById(dbId);
         ValidateUtil.notNull(dbInfo, "获取仓库信息失败");
