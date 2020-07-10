@@ -3,6 +3,7 @@ package com.ioc.datasupport.warehouse.api;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ioc.datasupport.common.MbpTablePageImpl;
+import com.ioc.datasupport.common.PublicConstant;
 import com.ioc.datasupport.dataprovider.dto.ColumnInfo;
 import com.ioc.datasupport.dataprovider.dto.TableInfo;
 import com.ioc.datasupport.dataprovider.result.AggregatePageResult;
@@ -35,7 +36,7 @@ import java.util.List;
  */
 @Api(tags = "仓库")
 @RestController
-@RequestMapping("dsp/warehouse")
+@RequestMapping(PublicConstant.URL_V1  + "warehouse")
 public class WarehouseAction {
 
     @Resource

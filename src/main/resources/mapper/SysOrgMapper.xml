@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ioc.datasupport.user.mapper.SysOrgMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ioc.datasupport.user.domain.SysOrg">
+        <result column="ORGID" property="orgid" />
+        <result column="DEMID" property="demid" />
+        <result column="ORGNAME" property="orgname" />
+        <result column="ORGDESC" property="orgdesc" />
+        <result column="ORGSUPID" property="orgsupid" />
+        <result column="PATH" property="path" />
+        <result column="DEPTH" property="depth" />
+        <result column="ORGTYPE" property="orgtype" />
+        <result column="CREATORID" property="creatorid" />
+        <result column="CREATETIME" property="createtime" />
+        <result column="UPDATEID" property="updateid" />
+        <result column="UPDATETIME" property="updatetime" />
+        <result column="SN" property="sn" />
+        <result column="FROMTYPE" property="fromtype" />
+        <result column="ORGPATHNAME" property="orgpathname" />
+        <result column="DEPTCODE" property="deptcode" />
+        <result column="ORGCODE" property="orgcode" />
+        <result column="USCCODE" property="usccode" />
+        <result column="ORG_NAME_ALIAS" property="orgNameAlias" />
+    </resultMap>
+
+</mapper>

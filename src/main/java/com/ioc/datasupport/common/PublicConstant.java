@@ -8,6 +8,8 @@ import org.ljdp.component.result.APIConstants;
  */
 public class PublicConstant extends APIConstants {
 
+    public static final String URL_V1 = "dsp/v1/";
+
     /** 认证token关键字 */
     public static final String TOKEN = "authority-token";
 

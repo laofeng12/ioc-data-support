@@ -22,13 +22,13 @@ public class MybatisCodeGenerator {
     /**
      * 表名数组
      */
-    public static String[] TABLE_NAME_ARRAY = new String[]{"dl_rescata_database"};
+    public static String[] TABLE_NAME_ARRAY = new String[]{"SYS_USER", "SYS_ORG"};
 
     /**
      * 模块名
      * warehouse 数据仓库
      */
-    public static String MODULE_NAME = "warehouse";
+    public static String MODULE_NAME = "user";
 
     /**
      * 父级包名
@@ -81,7 +81,7 @@ public class MybatisCodeGenerator {
         // 包配置
         PackageConfig pc = new PackageConfig();
 //        pc.setModuleName(scanner("模块名"));
-        // TODO 模块名
+        // 模块名
         pc.setModuleName(MODULE_NAME);
         pc.setParent(PACKAGE_PARENT);
         pc.setController("api");

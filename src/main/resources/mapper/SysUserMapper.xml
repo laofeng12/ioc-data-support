@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ioc.datasupport.user.mapper.SysUserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ioc.datasupport.user.domain.SysUser">
+        <id column="USERID" property="userid" />
+        <result column="FULLNAME" property="fullname" />
+        <result column="ACCOUNTTYPE" property="accounttype" />
+        <result column="ACCOUNT" property="account" />
+        <result column="PASSWORD" property="password" />
+        <result column="ISEXPIRED" property="isexpired" />
+        <result column="ISLOCK" property="islock" />
+        <result column="CREATETIME" property="createtime" />
+        <result column="STATUS" property="status" />
+        <result column="EMAIL" property="email" />
+        <result column="MOBILE" property="mobile" />
+        <result column="PHONE" property="phone" />
+        <result column="SEX" property="sex" />
+        <result column="PICTURE" property="picture" />
+        <result column="FROMTYPE" property="fromtype" />
+        <result column="ORGCODE" property="orgcode" />
+        <result column="DEPTCODE" property="deptcode" />
+        <result column="OARELATIONID" property="oarelationid" />
+        <result column="DEPTID" property="deptid" />
+        <result column="ORGNAME" property="orgname" />
+        <result column="LEVEL0" property="level0" />
+        <result column="LEVEL1" property="level1" />
+        <result column="UPDATETIME" property="updatetime" />
+        <result column="ORGID" property="orgid" />
+        <result column="IS_RESET_PWD" property="isResetPwd" />
+        <result column="LOCK_EXPIRE_TIME" property="lockExpireTime" />
+        <result column="IDENTITY_KEY" property="identityKey" />
+        <result column="IS_BUILD_IN" property="isBuildIn" />
+    </resultMap>
+
+</mapper>
