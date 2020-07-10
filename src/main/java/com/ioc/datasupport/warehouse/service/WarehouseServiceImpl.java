@@ -11,10 +11,12 @@ import com.ioc.datasupport.dataprovider.result.AggregatePageResult;
 import com.ioc.datasupport.dataprovider.result.AggregateResult;
 import com.ioc.datasupport.util.ValidateUtil;
 import com.ioc.datasupport.warehouse.domain.DlRescataDatabase;
+import com.ioc.datasupport.warehouse.domain.DlRescataResource;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import javax.validation.constraints.NotNull;
@@ -36,6 +38,9 @@ public class WarehouseServiceImpl implements WarehouseService {
 
     @Resource
     private WarehouseService warehouseService;
+
+    @Resource
+    private DlRescataResourceService dlRescataResourceService;
 
     @Override
     @Cacheable(key = "#dbId", sync = true)
@@ -78,5 +83,15 @@ public class WarehouseServiceImpl implements WarehouseService {
 
         AggregateResult aggregateResult = dataProvider.queryTableData(Collections.emptyList(), tableName, "", page);
         return new AggregatePageResult(aggregateResult, page);
+    }
+
+    @Override
+    public List<TableInfo> getUserTableList(Long dbId) throws Exception {
+        List<DlRescataResource> userResource = dlRescataResourceService.getUserResource(dbId);
+        if (CollectionUtils.isEmpty(userResource)) {
+            return Collections.emptyList();
+        }
+
+        return userResource.stream().map(TableInfo::new).collect(Collectors.toList());
     }
 }

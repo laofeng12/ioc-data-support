@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ioc.datasupport.warehouse.mapper.DlRescataResourceMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ioc.datasupport.warehouse.domain.DlRescataResource">
+        <id column="RESOURCE_ID" property="resourceId" />
+        <result column="RESOURCE_CODE" property="resourceCode" />
+        <result column="SOURCE_INFO_CODE" property="sourceInfoCode" />
+        <result column="REPOSITORY_TYPE" property="repositoryType" />
+        <result column="RESOURCE_NAME" property="resourceName" />
+        <result column="RESOURCE_TYPE" property="resourceType" />
+        <result column="RESOURCE_TABLE_NAME" property="resourceTableName" />
+        <result column="OPEN_SCOPE" property="openScope" />
+        <result column="IS_INTERNAL_USE_ONLY" property="isInternalUseOnly" />
+        <result column="RESOURCE_SOURCE" property="resourceSource" />
+        <result column="UPDATE_CYCLE" property="updateCycle" />
+        <result column="PROVIDE_TIME_LIMIT" property="provideTimeLimit" />
+        <result column="BUSINESS_OWNER" property="businessOwner" />
+        <result column="IS_SMS_ALERTS" property="isSmsAlerts" />
+        <result column="IS_SHOW_ON_MAP" property="isShowOnMap" />
+        <result column="RESOURCE_SUMMARY" property="resourceSummary" />
+        <result column="KEYWORD" property="keyword" />
+        <result column="VERSION" property="version" />
+        <result column="INFORMATION_AGENT" property="informationAgent" />
+        <result column="CREATE_TIME" property="createTime" />
+        <result column="UPDATE_TIME" property="updateTime" />
+        <result column="RESOURCE_STATE" property="resourceState" />
+        <result column="SECURITY_LEVEL" property="securityLevel" />
+        <result column="DATA_LABEL" property="dataLabel" />
+        <result column="URL" property="url" />
+        <result column="IS_LATEST" property="isLatest" />
+        <result column="SOURCE_MODE" property="sourceMode" />
+        <result column="RESOURCE_STATE_UPDATE_TIME" property="resourceStateUpdateTime" />
+        <result column="PROVIDE_TIME" property="provideTime" />
+        <result column="DISABLED_TIME" property="disabledTime" />
+        <result column="CREATE_UUID" property="createUuid" />
+        <result column="CREATE_ACCOUNT" property="createAccount" />
+        <result column="CREATE_FULLNAME" property="createFullname" />
+        <result column="CREATE_DEPT_NAME" property="createDeptName" />
+        <result column="CREATE_DEPT_TOP_ID" property="createDeptTopId" />
+        <result column="CREATE_DEPT_TOP_NAME" property="createDeptTopName" />
+        <result column="PROVIDE_DEPT_NAME" property="provideDeptName" />
+        <result column="CREATE_DEPT_ID" property="createDeptId" />
+        <result column="PROVIDE_DEPT_ID" property="provideDeptId" />
+        <result column="BUSINESS_OWNER_ACCOUNT" property="businessOwnerAccount" />
+        <result column="PROVIDE_DEPT_TOP_ID" property="provideDeptTopId" />
+        <result column="PROVIDE_DEPT_TOP_NAME" property="provideDeptTopName" />
+        <result column="PROVIDE_DEPT_FULL_PATH" property="provideDeptFullPath" />
+        <result column="IS_IN_STATION_MSG_NOTIFY" property="isInStationMsgNotify" />
+        <result column="DATA_DOMAIN" property="dataDomain" />
+        <result column="DATA_SUBMIT_TIME" property="dataSubmitTime" />
+        <result column="DATA_LAST_SUBMIT_TIME" property="dataLastSubmitTime" />
+        <result column="IS_INTERNAL_DATA_SOURCE" property="isInternalDataSource" />
+        <result column="INDUSTRY" property="industry" />
+        <result column="SERVICE" property="service" />
+        <result column="RESOURCE_FORM" property="resourceForm" />
+        <result column="TASK_ID1" property="taskId1" />
+        <result column="TASK_STATE" property="taskState" />
+    </resultMap>
+
+    <select id="getUserResources" resultType="com.ioc.datasupport.warehouse.domain.DlRescataResource">
+        select * from DL_RESCATA_RESOURCE t1 where
+        (t1.RESOURCE_TYPE != 2 AND t1.RESOURCE_TYPE != 4)
+        and (t1.OPEN_SCOPE = 1 or t1.OPEN_SCOPE = 2 or (t1.OPEN_SCOPE = 3 and t1.CREATE_ACCOUNT = #{currentUserAccount}))
+        and t1.RESOURCE_TYPE = 1
+        and t1.IS_LATEST = 1
+        and (t1.REPOSITORY_TYPE = #{repositoryType} or REPOSITORY_TYPE is null)
+    </select>
+</mapper>

@@ -22,7 +22,8 @@ import java.util.List;
 
 /**
  * <p>
- * 系统用户表 前端控制器
+ * 系统用户表
+ * 用来做用户数据等对接
  * </p>
  *
  * @author lsw

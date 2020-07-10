@@ -122,6 +122,17 @@ public class WarehouseAction {
      * 2、将二维数组的数据for循环，加密优先于脱敏
      */
 
+    @ApiOperation(value = "用户拥有的物理表", notes = "用户拥有的物理表", nickname = "userTableList")
+    @Security(session = false)
+    @RequestMapping(value = "/userTableList/{dbId}", method = RequestMethod.GET)
+    public DataApiResponse<TableInfo> getUserTableList(@PathVariable Long dbId) throws Exception {
+        List<TableInfo> tableList = warehouseService.getUserTableList(dbId);
+        DataApiResponse<TableInfo> resp = new DataApiResponse<>();
+        resp.setRows(tableList);
+
+        return resp;
+    }
+
     /*
      * 后期可能在这里对接FineBi，跟FineBi的接口对接
      * 用户

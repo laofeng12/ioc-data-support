@@ -1,19 +1,21 @@
 package com.ioc.datasupport.dataprovider.dto;
 
+import com.ioc.datasupport.warehouse.domain.DlRescataResource;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.List;
 
 @ApiModel("数据表配置")
 @Data
 @EqualsAndHashCode(callSuper = false)
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class TableInfo implements Serializable {
 
     @ApiModelProperty("表名")
@@ -26,4 +28,10 @@ public class TableInfo implements Serializable {
 
     @ApiModelProperty("字段配置")
     private List<ColumnInfo> columns;
+
+    public TableInfo (DlRescataResource dlRescataResource) {
+        this.tableSource = dlRescataResource.getResourceTableName();
+        this.tableComment = dlRescataResource.getResourceName();
+        columns = Collections.emptyList();
+    }
 }

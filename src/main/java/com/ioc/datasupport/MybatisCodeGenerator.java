@@ -22,13 +22,13 @@ public class MybatisCodeGenerator {
     /**
      * 表名数组
      */
-    public static String[] TABLE_NAME_ARRAY = new String[]{"SYS_USER", "SYS_ORG"};
+    public static String[] TABLE_NAME_ARRAY = new String[]{"DL_RESCATA_RESOURCE"};
 
     /**
      * 模块名
      * warehouse 数据仓库
      */
-    public static String MODULE_NAME = "user";
+    public static String MODULE_NAME = "warehouse";
 
     /**
      * 父级包名

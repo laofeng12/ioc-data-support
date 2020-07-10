@@ -37,4 +37,6 @@ public interface WarehouseService {
     List<ColumnInfo> getTableColumn(Long dbId, String tableName) throws Exception;
 
     AggregatePageResult getTableData(Long dbId, String tableName, Page page) throws Exception;
+
+    List<TableInfo> getUserTableList(Long dbId) throws Exception;
 }
