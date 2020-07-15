@@ -143,7 +143,7 @@ public class RedisComponent {
      */
     public void setJsonField(String key, String field, String value) {
         String jsonStr = stringRedisTemplate.boundValueOps(key).get();
-        // TODO 如果此时缓存失效
+        // 如果此时缓存失效，那parseObject应该就报错
         JSONObject obj = JSON.parseObject(jsonStr);
         obj.put(field, value);
         stringRedisTemplate.opsForValue().set(key, obj.toJSONString());

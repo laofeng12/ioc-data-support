@@ -90,7 +90,7 @@ public class MybatisCodeGenerator {
         pc.setServiceImpl("service");
         mpg.setPackageInfo(pc);
 
-        // TODO 自定义需要填充的字段
+        //  自定义需要填充的字段
 //        List<TableFill> tableFillList = new ArrayList<>();
         //如 每张表都有一个创建时间、修改时间
         //而且这基本上就是通用的了，新增时，创建时间和修改时间同时修改
@@ -128,11 +128,11 @@ public class MybatisCodeGenerator {
         strategy.setNaming(NamingStrategy.underline_to_camel);
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
         strategy.setEntityLombokModel(true);
-        // TODO 设置逻辑删除键（项目暂时是：物理删除）
+        //  设置逻辑删除键（项目暂时是：物理删除）
 //        strategy.setLogicDeleteFieldName("deleted");
-        // TODO 指定生成的bean的数据库表名（一般就改这里）
+        //  指定生成的bean的数据库表名（一般就改这里）
         strategy.setInclude(TABLE_NAME_ARRAY);
-        // TODO
+        //
         //strategy.setSuperEntityColumns("id");
         // 驼峰转连字符
         strategy.setControllerMappingHyphenStyle(true);

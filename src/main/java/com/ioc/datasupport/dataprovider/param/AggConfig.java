@@ -26,8 +26,6 @@ public class AggConfig {
     @ApiModelProperty("指标")
     private List<ValueConfig> values;
 
-    // TODO 在表格里面是有分组汇总的
-
     @ApiModelProperty("是否行汇总")
     private Boolean rowSum;
 
