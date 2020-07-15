@@ -28,20 +28,23 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EntityScan(basePackages= {
     "org.ljdp.plugin.batch.persistent",
     "org.ljdp.support.attach.domain",
-    "com.ioc.**.domain"
+    "com.ioc.**.domain",
+    "com.openjava.**.domain"
 })
 @EnableJpaRepositories(
     basePackages={"org.ljdp.support.**.repository",
-            "com.ioc.**.repository"},
+    "com.openjava.**.repository"},
     repositoryFactoryBeanClass=org.ljdp.core.spring.data.LjdpJpaRepositoryFactoryBean.class)
 @EnableTransactionManagement(mode= AdviceMode.ASPECTJ)
 @SpringBootApplication(
     scanBasePackages={
             "org.ljdp.support.**.component",
             "org.ljdp.support.**.service",
-            "org.ljdp.support.**.controller",
+//            "org.ljdp.support.**.controller",
             "org.openjava.boot.conf",
+            "org.openjava.boot.tenant",
             "com.openjava.*.component",
+            "com.openjava.**.service",
             "com.ioc.**.conf",
             "com.ioc.**.component",
             "com.ioc.**.api",

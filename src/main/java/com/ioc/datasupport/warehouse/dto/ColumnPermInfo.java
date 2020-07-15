@@ -29,6 +29,9 @@ public class ColumnPermInfo extends ColumnInfo {
     @ApiModelProperty("是否不用脱敏")
     private Integer isSensitived;
 
+    @ApiModelProperty("字段类型code")
+    private Long columnTypeCode;
+
     public ColumnPermInfo(DlRescataColumn dlRescataColumn) {
         // 列ID
         this.columnId = dlRescataColumn.getStructureId();
@@ -42,7 +45,7 @@ public class ColumnPermInfo extends ColumnInfo {
         this.setColumnPrecision(dlRescataColumn.getColumnLength());
         // 列小数位
         this.setColumnScale(dlRescataColumn.getDecimalLength());
-        // 字段类型 TODO dataType （1短字符、2较长字符、3长字符、4日期型、5整数型、6小数型）
-
+        // 字段类型code
+        this.columnTypeCode = dlRescataColumn.getColumnCode();
     }
 }

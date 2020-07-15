@@ -2,6 +2,7 @@ package com.ioc.datasupport.warehouse.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ioc.datasupport.common.MbpTablePageImpl;
+import com.ioc.datasupport.component.DataDictionaryComponent;
 import com.ioc.datasupport.component.UserComponent;
 import com.ioc.datasupport.dataprovider.DataProvider;
 import com.ioc.datasupport.dataprovider.DataProviderManager;
@@ -16,6 +17,7 @@ import com.ioc.datasupport.warehouse.domain.DlRescataDatabase;
 import com.ioc.datasupport.warehouse.domain.DlRescataResource;
 import com.ioc.datasupport.warehouse.domain.DlRescataStrucPermi;
 import com.ioc.datasupport.warehouse.dto.ColumnPermInfo;
+import com.openjava.framework.sys.domain.SysCode;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -55,6 +57,9 @@ public class WarehouseServiceImpl implements WarehouseService {
 
     @Resource
     private DlRescataStrucPermiService dlRescataStrucPermiService;
+
+    @Resource
+    private DataDictionaryComponent dataDictionaryComponent;
 
     @Override
     @Cacheable(key = "#dbId", sync = true)
@@ -126,6 +131,10 @@ public class WarehouseServiceImpl implements WarehouseService {
             DlRescataStrucPermi permi = permiMap.get(columnPermInfo.getColumnId());
             columnPermInfo.setIsDecryption(permi.getIsDecryption());
             columnPermInfo.setIsSensitived(permi.getIsSensitived());
+
+            // 设置字段类型
+            String columnType = dataDictionaryComponent.getSysCodeVal(DataDictionaryComponent.DL_COLUMN_DATA_TYPE, String.valueOf(columnPermInfo.getColumnTypeCode()));
+            columnPermInfo.setColumnType(columnType);
         }
 
         return columnPermInfos;
