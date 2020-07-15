@@ -8,6 +8,7 @@ import com.ioc.datasupport.dataprovider.dto.ColumnInfo;
 import com.ioc.datasupport.dataprovider.dto.TableInfo;
 import com.ioc.datasupport.dataprovider.result.AggregatePageResult;
 import com.ioc.datasupport.warehouse.domain.DlRescataDatabase;
+import com.ioc.datasupport.warehouse.dto.ColumnPermInfo;
 import com.ioc.datasupport.warehouse.service.DlRescataDatabaseService;
 import com.ioc.datasupport.warehouse.service.WarehouseService;
 import io.swagger.annotations.Api;
@@ -131,28 +132,15 @@ public class WarehouseAction {
     @ApiOperation(value = "用户列信息", notes = "用户列信息", nickname = "userColumns")
     @Security(session = true)
     @RequestMapping(value = "/userColumns/{tableId}", method = RequestMethod.GET)
-    public DataApiResponse<ColumnInfo> getUserColumns(@PathVariable Long tableId) throws Exception {
-        List<ColumnInfo> columnInfos = warehouseService.getUserTableColumn(tableId);
-        DataApiResponse<ColumnInfo> resp = new DataApiResponse<>();
-        resp.setRows(columnInfos);
+    public DataApiResponse<ColumnPermInfo> getUserColumns(@PathVariable Long tableId) throws Exception {
+        List<ColumnPermInfo> permInfos = warehouseService.getUserTableColumn(tableId);
+        DataApiResponse<ColumnPermInfo> resp = new DataApiResponse<>();
+        resp.setRows(permInfos);
 
         return resp;
     }
 
-    /*
-     * 后期可能在这里对接FineBi，跟FineBi的接口对接
-     * 用户
-     * 组织结构
-     * 资源目录->业务包
-     * 资源->表
-     */
+    // 查询数据，要脱敏加密
 
-    /*
-     * 根据用户信息，查询表（直接查oracle，还是要取仓库有的表，取交集）
-     */
-
-    /*
-     * 根据用户，查询字段信息（直接查oracle）
-     */
 
 }

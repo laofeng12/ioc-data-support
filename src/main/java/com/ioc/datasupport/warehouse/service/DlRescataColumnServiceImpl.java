@@ -22,11 +22,10 @@ import java.util.List;
 public class DlRescataColumnServiceImpl extends ServiceImpl<DlRescataColumnMapper, DlRescataColumn> implements DlRescataColumnService {
 
     @Override
-    public List<ColumnInfo> getUserColumns(Long tableId) {
+    public List<DlRescataColumn> getUserColumns(Long tableId) {
         DlRescataColumnParam<DlRescataColumn> param = new DlRescataColumnParam<>();
-        List<DlRescataColumn> list = this.list(param.genQueryWrapper());
+        param.setEq_resourceId(tableId);
 
-
-        return null;
+        return this.list(param.genQueryWrapper());
     }
 }

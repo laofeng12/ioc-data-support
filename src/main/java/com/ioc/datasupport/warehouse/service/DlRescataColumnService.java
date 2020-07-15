@@ -16,6 +16,6 @@ import java.util.List;
  */
 public interface DlRescataColumnService extends IService<DlRescataColumn> {
 
-    List<ColumnInfo> getUserColumns(Long tableId);
+    List<DlRescataColumn> getUserColumns(Long tableId);
 
 }

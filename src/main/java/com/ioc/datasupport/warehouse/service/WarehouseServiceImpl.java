@@ -2,6 +2,7 @@ package com.ioc.datasupport.warehouse.service;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ioc.datasupport.common.MbpTablePageImpl;
+import com.ioc.datasupport.component.UserComponent;
 import com.ioc.datasupport.dataprovider.DataProvider;
 import com.ioc.datasupport.dataprovider.DataProviderManager;
 import com.ioc.datasupport.dataprovider.dto.ColumnInfo;
@@ -10,8 +11,11 @@ import com.ioc.datasupport.dataprovider.dto.TableInfo;
 import com.ioc.datasupport.dataprovider.result.AggregatePageResult;
 import com.ioc.datasupport.dataprovider.result.AggregateResult;
 import com.ioc.datasupport.util.ValidateUtil;
+import com.ioc.datasupport.warehouse.domain.DlRescataColumn;
 import com.ioc.datasupport.warehouse.domain.DlRescataDatabase;
 import com.ioc.datasupport.warehouse.domain.DlRescataResource;
+import com.ioc.datasupport.warehouse.domain.DlRescataStrucPermi;
+import com.ioc.datasupport.warehouse.dto.ColumnPermInfo;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -22,6 +26,7 @@ import javax.annotation.Resource;
 import javax.validation.constraints.NotNull;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -34,6 +39,9 @@ import java.util.stream.Collectors;
 public class WarehouseServiceImpl implements WarehouseService {
 
     @Resource
+    private UserComponent userComponent;
+
+    @Resource
     private DlRescataDatabaseService dlRescataDatabaseService;
 
     @Resource
@@ -41,6 +49,12 @@ public class WarehouseServiceImpl implements WarehouseService {
 
     @Resource
     private DlRescataResourceService dlRescataResourceService;
+
+    @Resource
+    private DlRescataColumnService dlRescataColumnService;
+
+    @Resource
+    private DlRescataStrucPermiService dlRescataStrucPermiService;
 
     @Override
     @Cacheable(key = "#dbId", sync = true)
@@ -96,8 +110,24 @@ public class WarehouseServiceImpl implements WarehouseService {
     }
 
     @Override
-    public List<ColumnInfo> getUserTableColumn(Long tableId) throws Exception {
+    public List<ColumnPermInfo> getUserTableColumn(Long tableId) throws Exception {
+        // 获取该表的列信息
+        List<DlRescataColumn> userColumns = dlRescataColumnService.getUserColumns(tableId);
+        ValidateUtil.notEmpty(userColumns, "列信息为空");
+        List<Long> structureIds = userColumns.stream().map(DlRescataColumn::getStructureId).collect(Collectors.toList());
 
-        return null;
+        // 获取该用户对应列信息的权限
+        List<DlRescataStrucPermi> permis = dlRescataStrucPermiService.findByStructureIdInAndOwnerAccount(structureIds, userComponent.getUserInfo().getUserAccount());
+        Map<Long, DlRescataStrucPermi> permiMap = permis.stream().collect(Collectors.toMap(DlRescataStrucPermi::getStructureId, item -> item));
+
+        // 组合成新的实体，返回
+        List<ColumnPermInfo> columnPermInfos = userColumns.stream().map(ColumnPermInfo::new).collect(Collectors.toList());
+        for (ColumnPermInfo columnPermInfo : columnPermInfos) {
+            DlRescataStrucPermi permi = permiMap.get(columnPermInfo.getColumnId());
+            columnPermInfo.setIsDecryption(permi.getIsDecryption());
+            columnPermInfo.setIsSensitived(permi.getIsSensitived());
+        }
+
+        return columnPermInfos;
     }
 }

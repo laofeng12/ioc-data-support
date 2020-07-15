@@ -71,7 +71,7 @@ public class DlRescataColumn extends Model<DlRescataColumn> {
      * 字段长度
      */
     @TableField("COLUMN_LENGTH")
-    private Long columnLength;
+    private Integer columnLength;
 
     /**
      * 小数位数

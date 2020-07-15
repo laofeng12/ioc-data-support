@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ioc.datasupport.warehouse.mapper.DlRescataStrucPermiMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ioc.datasupport.warehouse.domain.DlRescataStrucPermi">
+        <id column="COLUMN_PERMISSION_ID" property="columnPermissionId" />
+        <result column="SUBSCRIBE_FORM_ID" property="subscribeFormId" />
+        <result column="OWNER_DEPT_ID" property="ownerDeptId" />
+        <result column="OWNER_DEPT_TOP_ID" property="ownerDeptTopId" />
+        <result column="OWNER_ACCOUNT" property="ownerAccount" />
+        <result column="OWNER_UUID" property="ownerUuid" />
+        <result column="RESOURCE_ID" property="resourceId" />
+        <result column="STRUCTURE_ID" property="structureId" />
+        <result column="IS_DECRYPTION" property="isDecryption" />
+        <result column="IS_SENSITIVED" property="isSensitived" />
+        <result column="RESOURCE_TABLE_NAME" property="resourceTableName" />
+        <result column="RESOURCE_VERSION" property="resourceVersion" />
+        <result column="CREATE_TIME" property="createTime" />
+        <result column="RESOURCE_CODE" property="resourceCode" />
+        <result column="OWNER_DEPT_TOP_NAME" property="ownerDeptTopName" />
+        <result column="OWNER_DEPT_NAME" property="ownerDeptName" />
+    </resultMap>
+
+</mapper>

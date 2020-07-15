@@ -5,7 +5,7 @@ import com.ioc.datasupport.common.MbpTablePageImpl;
 import com.ioc.datasupport.dataprovider.dto.ColumnInfo;
 import com.ioc.datasupport.dataprovider.dto.TableInfo;
 import com.ioc.datasupport.dataprovider.result.AggregatePageResult;
-import com.ioc.datasupport.warehouse.domain.DlRescataDatabase;
+import com.ioc.datasupport.warehouse.dto.ColumnPermInfo;
 
 import java.util.List;
 
@@ -40,5 +40,5 @@ public interface WarehouseService {
 
     List<TableInfo> getUserTableList(Long dbId) throws Exception;
 
-    List<ColumnInfo> getUserTableColumn(Long tableId) throws Exception;
+    List<ColumnPermInfo> getUserTableColumn(Long tableId) throws Exception;
 }

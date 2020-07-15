@@ -22,7 +22,7 @@ public class MybatisCodeGenerator {
     /**
      * 表名数组
      */
-    public static String[] TABLE_NAME_ARRAY = new String[]{"DlRescataStrucPermi"};
+    public static String[] TABLE_NAME_ARRAY = new String[]{"DL_RESCATA_STRUC_PERMI"};
 
     /**
      * 模块名
