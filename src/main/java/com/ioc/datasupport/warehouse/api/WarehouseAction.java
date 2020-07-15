@@ -123,12 +123,23 @@ public class WarehouseAction {
      */
 
     @ApiOperation(value = "用户拥有的物理表", notes = "用户拥有的物理表", nickname = "userTableList")
-    @Security(session = false)
+    @Security(session = true)
     @RequestMapping(value = "/userTableList/{dbId}", method = RequestMethod.GET)
     public DataApiResponse<TableInfo> getUserTableList(@PathVariable Long dbId) throws Exception {
         List<TableInfo> tableList = warehouseService.getUserTableList(dbId);
         DataApiResponse<TableInfo> resp = new DataApiResponse<>();
         resp.setRows(tableList);
+
+        return resp;
+    }
+
+    @ApiOperation(value = "用户列信息", notes = "用户列信息", nickname = "userColumns")
+    @Security(session = false)
+    @RequestMapping(value = "/userColumns//{tableId}", method = RequestMethod.GET)
+    public DataApiResponse<ColumnInfo> getUserColumns(@PathVariable Long tableId) throws Exception {
+        List<ColumnInfo> columnInfos = warehouseService.getUserTableColumn(tableId);
+        DataApiResponse<ColumnInfo> resp = new DataApiResponse<>();
+        resp.setRows(columnInfos);
 
         return resp;
     }

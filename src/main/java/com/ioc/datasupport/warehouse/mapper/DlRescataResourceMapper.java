@@ -23,6 +23,6 @@ public interface DlRescataResourceMapper extends BaseMapper<DlRescataResource> {
      * @param currentUserAccount 当前用户账号
      * @return 资源列表
      */
-    List<DlRescataResource> getUserResources(String createDetpId, Long repositoryType, String currentUserAccount);
+    List<DlRescataResource> getUserResources(String createDetpId, Integer repositoryType, String currentUserAccount);
 
 }

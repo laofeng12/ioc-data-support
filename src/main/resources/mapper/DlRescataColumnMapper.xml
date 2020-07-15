@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ioc.datasupport.warehouse.mapper.DlRescataColumnMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ioc.datasupport.warehouse.domain.DlRescataColumn">
+        <id column="STRUCTURE_ID" property="structureId" />
+        <result column="RESOURCE_ID" property="resourceId" />
+        <result column="COLUMN_NAME" property="columnName" />
+        <result column="COLUMN_COMMENT" property="columnComment" />
+        <result column="COLUMN_OPEN_SCOPE" property="columnOpenScope" />
+        <result column="COLUMN_DEFINITION" property="columnDefinition" />
+        <result column="DATA_TYPE" property="dataType" />
+        <result column="COLUMN_LENGTH" property="columnLength" />
+        <result column="DECIMAL_LENGTH" property="decimalLength" />
+        <result column="MEASUREMENT_UNIT" property="measurementUnit" />
+        <result column="DATA_FORMAT" property="dataFormat" />
+        <result column="QUALITY_RULE" property="qualityRule" />
+        <result column="IS_REQUIRE" property="isRequire" />
+        <result column="IS_ENCRYPT" property="isEncrypt" />
+        <result column="IS_DESENSITIZATION" property="isDesensitization" />
+        <result column="INSENSITIVES_RULE_ID" property="insensitivesRuleId" />
+        <result column="IS_PRIMARY_KEY" property="isPrimaryKey" />
+        <result column="DESENSITIZATION_RULE" property="desensitizationRule" />
+        <result column="IS_LIST" property="isList" />
+        <result column="IS_QUERY" property="isQuery" />
+        <result column="IS_EXPORT" property="isExport" />
+        <result column="IS_SHOW" property="isShow" />
+        <result column="WRITE_TYPE" property="writeType" />
+        <result column="CODE_SET" property="codeSet" />
+        <result column="DEFAULT_VALUE" property="defaultValue" />
+        <result column="INFO_DESCRIPTION" property="infoDescription" />
+        <result column="IS_DELETED" property="isDeleted" />
+        <result column="SIGN" property="sign" />
+        <result column="INSENSITIVES_START_END" property="insensitivesStartEnd" />
+        <result column="OLD_STRUCTURE_ID" property="oldStructureId" />
+        <result column="COLUMN_CODE" property="columnCode" />
+        <result column="INSENSITIVES_RULE_DESCRIPTION" property="insensitivesRuleDescription" />
+        <result column="ENCRYPT_DESCRIPTION" property="encryptDescription" />
+    </resultMap>
+
+</mapper>

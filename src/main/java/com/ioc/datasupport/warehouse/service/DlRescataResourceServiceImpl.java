@@ -1,9 +1,11 @@
 package com.ioc.datasupport.warehouse.service;
 
+import com.ioc.datasupport.component.UserComponent;
 import com.ioc.datasupport.warehouse.domain.DlRescataResource;
 import com.ioc.datasupport.warehouse.mapper.DlRescataResourceMapper;
 import com.ioc.datasupport.warehouse.service.DlRescataResourceService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.ljdp.component.exception.APIException;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -23,8 +25,18 @@ public class DlRescataResourceServiceImpl extends ServiceImpl<DlRescataResourceM
     @Resource
     private DlRescataResourceMapper dlRescataResourceMapper;
 
+    @Resource
+    private DlRescataDatabaseService dlRescataDatabaseService;
+
+    @Resource
+    private UserComponent userComponent;
+
     @Override
-    public List<DlRescataResource> getUserResource(Long dbId) {
-        return dlRescataResourceMapper.getUserResources("", dbId, "");
+    public List<DlRescataResource> getUserResource(Long dbId) throws APIException {
+        // 根据dbId获取repositoryType
+        Integer repositoryType = dlRescataDatabaseService.getRepositoryType(dbId);
+        String userAccount = userComponent.getUserInfo().getUserAccount();
+
+        return dlRescataResourceMapper.getUserResources("", repositoryType, userAccount);
     }
 }

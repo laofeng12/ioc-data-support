@@ -10,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import javax.validation.constraints.NotNull;
@@ -17,6 +18,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * <p>
@@ -75,6 +78,23 @@ public class DlRescataDatabaseServiceImpl extends ServiceImpl<DlRescataDatabaseM
         for (DlRescataDatabase dlRescataDatabase : rescataDataBaseList) {
             if (Objects.equals(dlRescataDatabase.getDatabaseId(), id)) {
                 return dlRescataDatabase;
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    @Cacheable(value = "repositoryType", key = "#dbId")
+    public Integer getRepositoryType(Long dbId) {
+        List<DlRescataDatabase> rescataDataBaseList = dlRescataDatabaseService.getRescataDataBaseList();
+        if (CollectionUtils.isEmpty(rescataDataBaseList)) {
+            return null;
+        }
+
+        for (DlRescataDatabase dlRescataDatabase : rescataDataBaseList) {
+            if (dlRescataDatabase.getDatabaseId().equals(dbId)) {
+                return dlRescataDatabase.getRepositoryType();
             }
         }
 

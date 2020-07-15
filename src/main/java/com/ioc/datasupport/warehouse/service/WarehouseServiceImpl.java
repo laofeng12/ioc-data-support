@@ -94,4 +94,10 @@ public class WarehouseServiceImpl implements WarehouseService {
 
         return userResource.stream().map(TableInfo::new).collect(Collectors.toList());
     }
+
+    @Override
+    public List<ColumnInfo> getUserTableColumn(Long tableId) throws Exception {
+
+        return null;
+    }
 }

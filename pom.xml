@@ -6,7 +6,7 @@
         <!--沿用公司架构-->
         <groupId>com.ioc</groupId>
         <artifactId>platform-service</artifactId>
-        <version>2.1.8.R27</version>
+        <version>2.1.15</version>
     </parent>
 
     <!--项目标识-->
@@ -24,7 +24,7 @@
         <dependency>
             <groupId>com.ioc</groupId>
             <artifactId>platform-framework</artifactId>
-            <version>2.1.8.R27</version>
+            <version>2.1.15.R01</version>
         </dependency>
         <!--web启动等 start-->
         <dependency>

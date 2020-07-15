@@ -18,6 +18,9 @@ import java.util.List;
 @AllArgsConstructor
 public class TableInfo implements Serializable {
 
+    @ApiModelProperty("表ID")
+    private Long tableId;
+
     @ApiModelProperty("表名")
     @Length(min=0, max=64)
     private String tableSource;
@@ -30,6 +33,7 @@ public class TableInfo implements Serializable {
     private List<ColumnInfo> columns;
 
     public TableInfo (DlRescataResource dlRescataResource) {
+        this.tableId = dlRescataResource.getResourceId();
         this.tableSource = dlRescataResource.getResourceTableName();
         this.tableComment = dlRescataResource.getResourceName();
         columns = Collections.emptyList();

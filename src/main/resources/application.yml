@@ -33,6 +33,16 @@ jasypt:
   encryptor:
     password: Lt4U6EgL19D2k_HY-AcD7-VAmq1OeLGqDdTTayXtH88
 
+iocplatform:
+  url:
+    # 跨局的附件下载的网关地址
+    file-download-gateway:
+      # 这里的url要用外网的地址，不能用服务名的方式
+      url: https://19.104.50.204
+      #通过附件下载的网关地址来下载附件：{0}需要下载的某局附件的局编码、{1}需要下载的附件id
+      download-path: ${iocplatform.url.file-download-gateway.url}/dmp/{0}/datatransferweb/admin/dfs/objectcatalog/download?objectkey={1}
+      minio-download-path: ${iocplatform.url.file-download-gateway.url}/dmp/{0}/datalakeweb/{1}
+
 
 
 

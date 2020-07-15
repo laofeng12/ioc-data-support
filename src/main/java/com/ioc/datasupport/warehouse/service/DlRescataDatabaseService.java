@@ -22,4 +22,6 @@ public interface DlRescataDatabaseService extends IService<DlRescataDatabase> {
     List<DlRescataDatabase> getRescataDataBasesShow();
 
     DlRescataDatabase getRescataDataBaseById(Long id);
+
+    Integer getRepositoryType(Long dbId);
 }

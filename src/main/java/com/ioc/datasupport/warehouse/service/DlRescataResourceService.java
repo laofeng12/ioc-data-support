@@ -2,6 +2,7 @@ package com.ioc.datasupport.warehouse.service;
 
 import com.ioc.datasupport.warehouse.domain.DlRescataResource;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.ljdp.component.exception.APIException;
 
 import java.util.List;
 
@@ -15,6 +16,6 @@ import java.util.List;
  */
 public interface DlRescataResourceService extends IService<DlRescataResource> {
 
-    List<DlRescataResource> getUserResource(Long dbId);
+    List<DlRescataResource> getUserResource(Long dbId) throws APIException;
 
 }
