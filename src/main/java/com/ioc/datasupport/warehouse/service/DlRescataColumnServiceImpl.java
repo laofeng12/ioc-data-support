@@ -3,6 +3,7 @@ package com.ioc.datasupport.warehouse.service;
 import com.ioc.datasupport.dataprovider.dto.ColumnInfo;
 import com.ioc.datasupport.warehouse.domain.DlRescataColumn;
 import com.ioc.datasupport.warehouse.mapper.DlRescataColumnMapper;
+import com.ioc.datasupport.warehouse.param.DlRescataColumnParam;
 import com.ioc.datasupport.warehouse.service.DlRescataColumnService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,10 @@ public class DlRescataColumnServiceImpl extends ServiceImpl<DlRescataColumnMappe
 
     @Override
     public List<ColumnInfo> getUserColumns(Long tableId) {
+        DlRescataColumnParam<DlRescataColumn> param = new DlRescataColumnParam<>();
+        List<DlRescataColumn> list = this.list(param.genQueryWrapper());
+
+
         return null;
     }
 }

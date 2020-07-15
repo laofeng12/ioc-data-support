@@ -89,8 +89,6 @@ public class WarehouseAction {
         return warehouseService.getTablePage(dbId, page);
     }
 
-    // 查询物理表的数据 TODO 后期要考虑：脱敏、加密
-
     @ApiOperation(value = "列信息", notes = "列信息", nickname = "columns")
     @Security(session = false)
     @RequestMapping(value = "/columns/{dbId}/{tableName}", method = RequestMethod.GET)
@@ -117,10 +115,7 @@ public class WarehouseAction {
         return resp;
     }
 
-    /*
-     * 1、查出的数据是二维数组
-     * 2、将二维数组的数据for循环，加密优先于脱敏
-     */
+    /*---- 实际用户查询 ----*/
 
     @ApiOperation(value = "用户拥有的物理表", notes = "用户拥有的物理表", nickname = "userTableList")
     @Security(session = true)
@@ -134,8 +129,8 @@ public class WarehouseAction {
     }
 
     @ApiOperation(value = "用户列信息", notes = "用户列信息", nickname = "userColumns")
-    @Security(session = false)
-    @RequestMapping(value = "/userColumns//{tableId}", method = RequestMethod.GET)
+    @Security(session = true)
+    @RequestMapping(value = "/userColumns/{tableId}", method = RequestMethod.GET)
     public DataApiResponse<ColumnInfo> getUserColumns(@PathVariable Long tableId) throws Exception {
         List<ColumnInfo> columnInfos = warehouseService.getUserTableColumn(tableId);
         DataApiResponse<ColumnInfo> resp = new DataApiResponse<>();
