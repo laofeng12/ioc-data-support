@@ -82,4 +82,8 @@ public class PublicConstant extends APIConstants {
      */
     public static final int DB_TYPE_INT_HIVE_HUAWEI = 6;
 
+    /**
+     * 查询结果最大行数
+     */
+    public static final int SQL_MAX_ROWS = 1_000_000;
 }

@@ -1,5 +1,6 @@
 package com.ioc.datasupport.dataprovider.result;
 
+import com.ioc.datasupport.dataprovider.dto.ColumnInfo;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -26,4 +27,11 @@ public class ColumnIndex {
 
     @ApiModelProperty("字段类型")
     private String columnType;
+
+    public ColumnIndex(ColumnInfo columnInfo) {
+        this.index = columnInfo.getColumnIndex();
+        this.name = columnInfo.getColumnSource();
+        this.comment = columnInfo.getColumnComment();
+        this.columnType = columnInfo.getColumnType();
+    }
 }

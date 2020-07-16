@@ -7,8 +7,10 @@ import com.ioc.datasupport.common.PublicConstant;
 import com.ioc.datasupport.dataprovider.dto.ColumnInfo;
 import com.ioc.datasupport.dataprovider.dto.TableInfo;
 import com.ioc.datasupport.dataprovider.result.AggregatePageResult;
+import com.ioc.datasupport.dataprovider.result.JdbcTemplateAggResult;
 import com.ioc.datasupport.warehouse.domain.DlRescataDatabase;
 import com.ioc.datasupport.warehouse.dto.ColumnPermInfo;
+import com.ioc.datasupport.warehouse.dto.QueryDataDTO;
 import com.ioc.datasupport.warehouse.service.DlRescataDatabaseService;
 import com.ioc.datasupport.warehouse.service.WarehouseService;
 import io.swagger.annotations.Api;
@@ -17,11 +19,8 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.ljdp.component.result.DataApiResponse;
 import org.ljdp.secure.annotation.Security;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.annotation.Resource;
@@ -48,7 +47,7 @@ public class WarehouseAction {
 
     @ApiOperation(value = "仓库列表", notes = "仓库列表", nickname = "dbInfos")
     @Security(session = false)
-    @RequestMapping(value = "/dbInfos", method = RequestMethod.GET)
+    @GetMapping(value = "/dbInfos")
     public DataApiResponse<DlRescataDatabase> getDbInfos(){
         List<DlRescataDatabase> rescataDataBaseList = dlRescataDatabaseService.getRescataDataBaseList();
         DataApiResponse<DlRescataDatabase> resp = new DataApiResponse<>();
@@ -59,7 +58,7 @@ public class WarehouseAction {
 
     @ApiOperation(value = "仓库列表展示", notes = "仓库列表展示", nickname = "dbInfosShow")
     @Security(session = false)
-    @RequestMapping(value = "/dbInfosShow", method = RequestMethod.GET)
+    @GetMapping(value = "/dbInfosShow")
     public DataApiResponse<DlRescataDatabase> getDbInfosShow(){
         List<DlRescataDatabase> rescataDataBaseList = dlRescataDatabaseService.getRescataDataBasesShow();
         DataApiResponse<DlRescataDatabase> resp = new DataApiResponse<>();
@@ -70,7 +69,7 @@ public class WarehouseAction {
 
     @ApiOperation(value = "物理表展示", notes = "物理表展示", nickname = "tableList")
     @Security(session = false)
-    @RequestMapping(value = "/tableList/{dbId}", method = RequestMethod.GET)
+    @GetMapping(value = "/tableList/{dbId}")
     public DataApiResponse<TableInfo> getTableList(@PathVariable Long dbId) throws Exception {
         List<TableInfo> tableList = warehouseService.getTableList(dbId);
         DataApiResponse<TableInfo> resp = new DataApiResponse<>();
@@ -85,14 +84,14 @@ public class WarehouseAction {
         @ApiImplicitParam(name = "current", value = "页码", required = false, dataType = "int", paramType = "query"),
     })
     @Security(session = false)
-    @RequestMapping(value = "/tablePage/{dbId}", method = RequestMethod.GET)
+    @GetMapping(value = "/tablePage/{dbId}")
     public MbpTablePageImpl<TableInfo> getTableList(@PathVariable Long dbId, @ApiIgnore Page<TableInfo> page) throws Exception {
         return warehouseService.getTablePage(dbId, page);
     }
 
     @ApiOperation(value = "列信息", notes = "列信息", nickname = "columns")
     @Security(session = false)
-    @RequestMapping(value = "/columns/{dbId}/{tableName}", method = RequestMethod.GET)
+    @GetMapping(value = "/columns/{dbId}/{tableName}")
     public DataApiResponse<ColumnInfo> getColumns(@PathVariable Long dbId, @PathVariable String tableName) throws Exception {
         List<ColumnInfo> columnInfos = warehouseService.getTableColumn(dbId, tableName);
         DataApiResponse<ColumnInfo> resp = new DataApiResponse<>();
@@ -107,7 +106,7 @@ public class WarehouseAction {
         @ApiImplicitParam(name = "current", value = "页码", required = false, dataType = "int", paramType = "query"),
     })
     @Security(session = false)
-    @RequestMapping(value = "/tableData/{dbId}/{tableName}", method = RequestMethod.GET)
+    @GetMapping(value = "/tableData/{dbId}/{tableName}")
     public DataApiResponse<AggregatePageResult> getTableData(@PathVariable Long dbId, @PathVariable String tableName, @ApiIgnore Page<TableInfo> page) throws Exception {
         DataApiResponse<AggregatePageResult> resp = new DataApiResponse<>();
         AggregatePageResult tableData = warehouseService.getTableData(dbId, tableName, page);
@@ -120,7 +119,7 @@ public class WarehouseAction {
 
     @ApiOperation(value = "用户拥有的物理表", notes = "用户拥有的物理表", nickname = "userTableList")
     @Security(session = true)
-    @RequestMapping(value = "/userTableList/{dbId}", method = RequestMethod.GET)
+    @GetMapping(value = "/userTableList/{dbId}")
     public DataApiResponse<TableInfo> getUserTableList(@PathVariable Long dbId) throws Exception {
         List<TableInfo> tableList = warehouseService.getUserTableList(dbId);
         DataApiResponse<TableInfo> resp = new DataApiResponse<>();
@@ -131,7 +130,7 @@ public class WarehouseAction {
 
     @ApiOperation(value = "用户列信息", notes = "用户列信息", nickname = "userColumns")
     @Security(session = true)
-    @RequestMapping(value = "/userColumns/{tableId}", method = RequestMethod.GET)
+    @GetMapping(value = "/userColumns/{tableId}")
     public DataApiResponse<ColumnPermInfo> getUserColumns(@PathVariable Long tableId) throws Exception {
         List<ColumnPermInfo> permInfos = warehouseService.getUserTableColumn(tableId);
         DataApiResponse<ColumnPermInfo> resp = new DataApiResponse<>();
@@ -140,12 +139,15 @@ public class WarehouseAction {
         return resp;
     }
 
-    // 查询数据，要脱敏加密
+    @ApiOperation(value = "查询数据", notes = "查询数据", nickname = "userColumns")
+    @Security(session = false)
+    @PostMapping(value = "/queryData")
+    public DataApiResponse<JdbcTemplateAggResult> queryData(@RequestBody QueryDataDTO queryDataDTO) throws Exception {
+        JdbcTemplateAggResult result = warehouseService.queryData(queryDataDTO);
+        DataApiResponse<JdbcTemplateAggResult> resp = new DataApiResponse<>();
+        resp.setData(result);
 
-
-    // 根据SQL-count
-
-
-    // 根据SQL-select
+        return resp;
+    }
 
 }

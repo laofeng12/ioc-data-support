@@ -9,15 +9,16 @@ import com.ioc.datasupport.dataprovider.DataProviderManager;
 import com.ioc.datasupport.dataprovider.dto.ColumnInfo;
 import com.ioc.datasupport.dataprovider.dto.DatasourceInfo;
 import com.ioc.datasupport.dataprovider.dto.TableInfo;
-import com.ioc.datasupport.dataprovider.result.AggregatePageResult;
-import com.ioc.datasupport.dataprovider.result.AggregateResult;
+import com.ioc.datasupport.dataprovider.result.*;
 import com.ioc.datasupport.util.ValidateUtil;
 import com.ioc.datasupport.warehouse.domain.DlRescataColumn;
 import com.ioc.datasupport.warehouse.domain.DlRescataDatabase;
 import com.ioc.datasupport.warehouse.domain.DlRescataResource;
 import com.ioc.datasupport.warehouse.domain.DlRescataStrucPermi;
 import com.ioc.datasupport.warehouse.dto.ColumnPermInfo;
+import com.ioc.datasupport.warehouse.dto.QueryDataDTO;
 import com.openjava.framework.sys.domain.SysCode;
+import org.ljdp.component.exception.APIException;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -138,5 +139,19 @@ public class WarehouseServiceImpl implements WarehouseService {
         }
 
         return columnPermInfos;
+    }
+
+    @Override
+    public JdbcTemplateAggResult queryData(QueryDataDTO queryDataDTO) throws Exception {
+        DlRescataDatabase dbInfo = dlRescataDatabaseService.getRescataDataBaseById(queryDataDTO.getDbId());
+        ValidateUtil.notNull(dbInfo, "获取仓库信息失败");
+        DataProvider dataProvider = DataProviderManager.getDataProvider(new DatasourceInfo(dbInfo));
+
+        // TODO 加密脱敏
+        JdbcTemplateAggResult result = dataProvider.queryBySql(queryDataDTO.getSql());
+        List<ColumnInfo> columnList = dataProvider.getColumnList(queryDataDTO.getTableName());
+        List<ColumnIndex> columnIndex = columnList.stream().map(ColumnIndex::new).collect(Collectors.toList());
+        result.setColumnList(columnIndex);
+        return result;
     }
 }

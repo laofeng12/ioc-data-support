@@ -5,13 +5,11 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ioc.datasupport.dataprovider.dto.ColumnInfo;
 import com.ioc.datasupport.dataprovider.dto.DatasourceInfo;
 import com.ioc.datasupport.dataprovider.dto.TableInfo;
-import com.ioc.datasupport.dataprovider.param.AggConfig;
 import com.ioc.datasupport.dataprovider.param.CompositeConfig;
 import com.ioc.datasupport.dataprovider.param.ConfigComponent;
 import com.ioc.datasupport.dataprovider.param.DimensionConfig;
 import com.ioc.datasupport.dataprovider.result.AggregateResult;
-import org.springframework.data.domain.Pageable;
-import org.springframework.jdbc.core.SqlProvider;
+import com.ioc.datasupport.dataprovider.result.JdbcTemplateAggResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,4 +86,6 @@ public abstract class DataProvider {
      * @throws Exception 异常
      */
     public abstract AggregateResult queryTableData(List<String> columns, String tableName, String where, Page page) throws Exception;
+
+    public abstract JdbcTemplateAggResult queryBySql(String sql) throws Exception;
 }

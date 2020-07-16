@@ -17,12 +17,15 @@ import com.ioc.datasupport.dataprovider.dto.JavaSqlTypeEnum;
 import com.ioc.datasupport.dataprovider.dto.TableInfo;
 import com.ioc.datasupport.dataprovider.result.AggregateResult;
 import com.ioc.datasupport.dataprovider.result.ColumnIndex;
+import com.ioc.datasupport.dataprovider.result.JdbcTemplateAggPageResult;
+import com.ioc.datasupport.dataprovider.result.JdbcTemplateAggResult;
 import com.ioc.datasupport.util.EnumUtil;
+import org.apache.commons.collections4.map.HashedMap;
 import org.apache.commons.lang3.StringUtils;
 import org.ljdp.component.exception.APIException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Pageable;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.util.CollectionUtils;
 
 import javax.sql.DataSource;
@@ -45,7 +48,9 @@ public class JdbcDataProvider extends DataProvider {
 
     private boolean pooled = false;
 
-    private static final ConcurrentMap<String, DataSource> DATASOURCE_MAP = new ConcurrentHashMap<>(32);
+    private static final ConcurrentMap<String, DataSource> DATASOURCE_MAP = new ConcurrentHashMap<>(8);
+
+    protected static final ConcurrentMap<String, JdbcTemplate> JDBC_TEMPLATE_MAP = new ConcurrentHashMap<>(8);
 
     @Override
     public List<TableInfo> getTableList(String tableNameLike) throws Exception {
@@ -200,6 +205,18 @@ public class JdbcDataProvider extends DataProvider {
         return result;
     }
 
+    @Override
+    public JdbcTemplateAggResult queryBySql(String sql) throws Exception {
+        JdbcTemplate jdbcTemplate = this.getJdbcTemplate();
+        // 设置最大行数
+        jdbcTemplate.setMaxRows(PublicConstant.SQL_MAX_ROWS);
+        List<Map<String, Object>> data = jdbcTemplate.queryForList(sql);
+        JdbcTemplateAggResult result = new JdbcTemplateAggResult();
+        result.setData(data);
+
+        return result;
+    }
+
     /*-------------------获取连接代码-------------------*/
 
     /**
@@ -305,6 +322,84 @@ public class JdbcDataProvider extends DataProvider {
             LOG.error("\n[getConnection]数据库操作异常,dataSource:{}", JSONObject.toJSON(datasource),e);
             throw new APIException(ExceptionConstants.EXCEPTION_ERROR,"数据库操作异常,原因:"+e.getMessage());
         }
+    }
+
+    /*-----------------获取JdbcTemplate------------------*/
+
+    /**
+     * 获取jdbcTemplate
+     * @return
+     * @throws Exception
+     */
+    private JdbcTemplate getJdbcTemplate() throws Exception {
+        String password = this.datasource.getPassword();
+
+        String key = Hashing.md5().newHasher().putString(JSONObject.toJSON(this.datasource).toString(), Charsets.UTF_8).hash().toString();
+        JdbcTemplate jdbcTemplate = JDBC_TEMPLATE_MAP.get(key);
+        if (jdbcTemplate != null) {
+            return jdbcTemplate;
+        }
+
+        DataSource ds = DATASOURCE_MAP.get(key);
+        if (ds == null) {
+            synchronized (key.intern()) {
+                ds = DATASOURCE_MAP.get(key);
+                if (ds == null) {
+                    Map<String, String> conf = new HashedMap<>(16);
+                    //驱动
+                    conf.put(DruidDataSourceFactory.PROP_DRIVERCLASSNAME, this.getDriver());
+                    //连接URL
+                    conf.put(DruidDataSourceFactory.PROP_URL, this.getConnectUrl());
+                    //用户名
+                    conf.put(DruidDataSourceFactory.PROP_USERNAME, datasource.getUsername());
+                    if (org.apache.commons.lang.StringUtils.isNotBlank(password)) {
+                        //密码
+                        conf.put(DruidDataSourceFactory.PROP_PASSWORD, password);
+                    }
+                    //初始大小
+                    conf.put(DruidDataSourceFactory.PROP_INITIALSIZE, "3");
+                    //其他优化参数
+                    //最大连接池数量
+                    conf.put(DruidDataSourceFactory.PROP_MAXACTIVE, "100");
+                    //最小连接池数量
+                    conf.put(DruidDataSourceFactory.PROP_MINIDLE, "1");
+                    //获取连接时最大等待时间，单位毫秒
+                    conf.put(DruidDataSourceFactory.PROP_MAXWAIT, "10000");
+                    //是否缓存preparedStatement，也就是PSCache
+                    conf.put(DruidDataSourceFactory.PROP_POOLPREPAREDSTATEMENTS, "false");
+                    //要启用PSCache，必须配置大于0，当大于0时，poolPreparedStatements自动触发修改为true
+                    conf.put(DruidDataSourceFactory.PROP_MAXOPENPREPAREDSTATEMENTS, "20");
+                    //用来检测连接是否有效的sql
+                    conf.put(DruidDataSourceFactory.PROP_VALIDATIONQUERY, this.getValidationQuery());
+                    //接是否有效的sql的最大等待时间
+                    conf.put(DruidDataSourceFactory.PROP_VALIDATIONQUERY_TIMEOUT, "1");
+                    //申请连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能。
+                    conf.put(DruidDataSourceFactory.PROP_TESTONBORROW, "false");
+                    //归还连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能
+                    conf.put(DruidDataSourceFactory.PROP_TESTONRETURN, "false");
+                    //建议配置为true，不影响性能，并且保证安全性。申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效。
+                    conf.put(DruidDataSourceFactory.PROP_TESTWHILEIDLE, "true");
+                    //属性类型是字符串，通过别名的方式配置扩展插件，常用的插件有：
+                    //监控统计用的filter:stat日志用的filter:log4j防御sql注入的filter:wall
+                    conf.put(DruidDataSourceFactory.PROP_FILTERS, "stat");
+                    //oralce获取注释
+                    conf.put("remarksReporting","true");
+
+                    DruidDataSource druidDS = (DruidDataSource) DruidDataSourceFactory.createDataSource(conf);
+                    //连接失败后断开
+                    druidDS.setBreakAfterAcquireFailure(true);
+                    //连接失败重试次数
+                    druidDS.setConnectionErrorRetryAttempts(2);
+                    DATASOURCE_MAP.put(key, druidDS);
+                    ds = DATASOURCE_MAP.get(key);
+                }
+
+            }
+        }
+        jdbcTemplate = new JdbcTemplate(ds);
+        JDBC_TEMPLATE_MAP.put(key, jdbcTemplate);
+
+        return jdbcTemplate;
     }
 
     /*-----------------需要被子类重载的方法------------------*/
