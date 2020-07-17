@@ -22,13 +22,15 @@ public class MybatisCodeGenerator {
     /**
      * 表名数组
      */
-    public static String[] TABLE_NAME_ARRAY = new String[]{"DL_RESCATA_STRUC_PERMI"};
+    public static String[] TABLE_NAME_ARRAY = new String[]{"DL_INSENSITIVES_RULE"};
 
     /**
      * 模块名
      * warehouse 数据仓库
+     * datalake 数据湖
+     * user 管理系统用户模块
      */
-    public static String MODULE_NAME = "warehouse";
+    public static String MODULE_NAME = "datalake";
 
     /**
      * 父级包名

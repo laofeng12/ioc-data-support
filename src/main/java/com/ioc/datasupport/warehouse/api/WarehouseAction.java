@@ -8,10 +8,10 @@ import com.ioc.datasupport.dataprovider.dto.ColumnInfo;
 import com.ioc.datasupport.dataprovider.dto.TableInfo;
 import com.ioc.datasupport.dataprovider.result.AggregatePageResult;
 import com.ioc.datasupport.dataprovider.result.JdbcTemplateAggResult;
-import com.ioc.datasupport.warehouse.domain.DlRescataDatabase;
+import com.ioc.datasupport.datalake.domain.DlRescataDatabase;
 import com.ioc.datasupport.warehouse.dto.ColumnPermInfo;
 import com.ioc.datasupport.warehouse.dto.QueryDataDTO;
-import com.ioc.datasupport.warehouse.service.DlRescataDatabaseService;
+import com.ioc.datasupport.datalake.service.DlRescataDatabaseService;
 import com.ioc.datasupport.warehouse.service.WarehouseService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -140,9 +141,9 @@ public class WarehouseAction {
     }
 
     @ApiOperation(value = "查询数据", notes = "查询数据", nickname = "userColumns")
-    @Security(session = false)
+    @Security(session = true)
     @PostMapping(value = "/queryData")
-    public DataApiResponse<JdbcTemplateAggResult> queryData(@RequestBody QueryDataDTO queryDataDTO) throws Exception {
+    public DataApiResponse<JdbcTemplateAggResult> queryData(@Valid @RequestBody QueryDataDTO queryDataDTO) throws Exception {
         JdbcTemplateAggResult result = warehouseService.queryData(queryDataDTO);
         DataApiResponse<JdbcTemplateAggResult> resp = new DataApiResponse<>();
         resp.setData(result);

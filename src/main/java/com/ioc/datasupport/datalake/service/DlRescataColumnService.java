@@ -1,7 +1,6 @@
-package com.ioc.datasupport.warehouse.service;
+package com.ioc.datasupport.datalake.service;
 
-import com.ioc.datasupport.dataprovider.dto.ColumnInfo;
-import com.ioc.datasupport.warehouse.domain.DlRescataColumn;
+import com.ioc.datasupport.datalake.domain.DlRescataColumn;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;

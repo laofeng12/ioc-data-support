@@ -1,6 +1,6 @@
-package com.ioc.datasupport.warehouse.mapper;
+package com.ioc.datasupport.datalake.mapper;
 
-import com.ioc.datasupport.warehouse.domain.DlRescataResource;
+import com.ioc.datasupport.datalake.domain.DlRescataResource;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 import java.util.List;

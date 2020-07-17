@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ioc.datasupport.warehouse.mapper.DlRescataResourceMapper">
+<mapper namespace="com.ioc.datasupport.datalake.mapper.DlRescataResourceMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.ioc.datasupport.warehouse.domain.DlRescataResource">
+    <resultMap id="BaseResultMap" type="com.ioc.datasupport.datalake.domain.DlRescataResource">
         <id column="RESOURCE_ID" property="resourceId" />
         <result column="RESOURCE_CODE" property="resourceCode" />
         <result column="SOURCE_INFO_CODE" property="sourceInfoCode" />
@@ -59,7 +59,7 @@
         <result column="TASK_STATE" property="taskState" />
     </resultMap>
 
-    <select id="getUserResources" resultType="com.ioc.datasupport.warehouse.domain.DlRescataResource">
+    <select id="getUserResources" resultType="com.ioc.datasupport.datalake.domain.DlRescataResource">
         select * from DL_RESCATA_RESOURCE t1 where
         (t1.RESOURCE_TYPE != 2 AND t1.RESOURCE_TYPE != 4)
         and (t1.OPEN_SCOPE = 1 or t1.OPEN_SCOPE = 2 or (t1.OPEN_SCOPE = 3 and t1.CREATE_ACCOUNT = #{currentUserAccount}))

@@ -1,7 +1,7 @@
 package com.ioc.datasupport.warehouse.dto;
 
 import com.ioc.datasupport.dataprovider.dto.ColumnInfo;
-import com.ioc.datasupport.warehouse.domain.DlRescataColumn;
+import com.ioc.datasupport.datalake.domain.DlRescataColumn;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;

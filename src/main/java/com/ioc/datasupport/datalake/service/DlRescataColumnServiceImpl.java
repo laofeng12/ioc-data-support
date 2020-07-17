@@ -1,10 +1,8 @@
-package com.ioc.datasupport.warehouse.service;
+package com.ioc.datasupport.datalake.service;
 
-import com.ioc.datasupport.dataprovider.dto.ColumnInfo;
-import com.ioc.datasupport.warehouse.domain.DlRescataColumn;
-import com.ioc.datasupport.warehouse.mapper.DlRescataColumnMapper;
-import com.ioc.datasupport.warehouse.param.DlRescataColumnParam;
-import com.ioc.datasupport.warehouse.service.DlRescataColumnService;
+import com.ioc.datasupport.datalake.domain.DlRescataColumn;
+import com.ioc.datasupport.datalake.mapper.DlRescataColumnMapper;
+import com.ioc.datasupport.datalake.param.DlRescataColumnParam;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +21,7 @@ public class DlRescataColumnServiceImpl extends ServiceImpl<DlRescataColumnMappe
 
     @Override
     public List<DlRescataColumn> getUserColumns(Long tableId) {
-        DlRescataColumnParam<DlRescataColumn> param = new DlRescataColumnParam<>();
+        DlRescataColumnParam param = new DlRescataColumnParam();
         param.setEq_resourceId(tableId);
 
         return this.list(param.genQueryWrapper());

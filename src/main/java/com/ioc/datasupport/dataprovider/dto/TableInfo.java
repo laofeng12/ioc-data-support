@@ -1,6 +1,6 @@
 package com.ioc.datasupport.dataprovider.dto;
 
-import com.ioc.datasupport.warehouse.domain.DlRescataResource;
+import com.ioc.datasupport.datalake.domain.DlRescataResource;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;

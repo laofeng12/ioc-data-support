@@ -1,6 +1,6 @@
-package com.ioc.datasupport.warehouse.service;
+package com.ioc.datasupport.datalake.service;
 
-import com.ioc.datasupport.warehouse.domain.DlRescataStrucPermi;
+import com.ioc.datasupport.datalake.domain.DlRescataStrucPermi;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;

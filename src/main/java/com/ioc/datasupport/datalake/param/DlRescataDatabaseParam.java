@@ -1,6 +1,7 @@
-package com.ioc.datasupport.warehouse.param;
+package com.ioc.datasupport.datalake.param;
 
 import com.ioc.datasupport.common.CommonParam;
+import com.ioc.datasupport.datalake.domain.DlRescataDatabase;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -15,7 +16,8 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @ApiModel("仓库数据")
 @Data
-public class DlRescataDatabaseParam<T> extends CommonParam<T> {
+public class DlRescataDatabaseParam extends CommonParam<DlRescataDatabase> {
+//public class DlRescataDatabaseParam<T> extends CommonParam<T> {
 
     @ApiModelProperty("databaseId in")
     private List<Long> in_databaseId;

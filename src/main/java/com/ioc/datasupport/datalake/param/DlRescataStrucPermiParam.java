@@ -1,6 +1,7 @@
-package com.ioc.datasupport.warehouse.param;
+package com.ioc.datasupport.datalake.param;
 
 import com.ioc.datasupport.common.CommonParam;
+import com.ioc.datasupport.datalake.domain.DlRescataStrucPermi;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -15,7 +16,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = true)
 @ApiModel("列权限")
 @Data
-public class DlRescataStrucPermiParam<T> extends CommonParam<T> {
+public class DlRescataStrucPermiParam extends CommonParam<DlRescataStrucPermi> {
 
     @ApiModelProperty("in 结构ID")
     private List<Long> in_structureId;

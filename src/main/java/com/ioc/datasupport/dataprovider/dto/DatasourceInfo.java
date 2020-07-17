@@ -1,8 +1,7 @@
 package com.ioc.datasupport.dataprovider.dto;
 
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.ioc.datasupport.warehouse.domain.DlRescataDatabase;
+import com.ioc.datasupport.datalake.domain.DlRescataDatabase;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

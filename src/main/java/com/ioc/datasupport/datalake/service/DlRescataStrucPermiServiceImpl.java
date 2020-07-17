@@ -1,9 +1,8 @@
-package com.ioc.datasupport.warehouse.service;
+package com.ioc.datasupport.datalake.service;
 
-import com.ioc.datasupport.warehouse.domain.DlRescataStrucPermi;
-import com.ioc.datasupport.warehouse.mapper.DlRescataStrucPermiMapper;
-import com.ioc.datasupport.warehouse.param.DlRescataStrucPermiParam;
-import com.ioc.datasupport.warehouse.service.DlRescataStrucPermiService;
+import com.ioc.datasupport.datalake.domain.DlRescataStrucPermi;
+import com.ioc.datasupport.datalake.mapper.DlRescataStrucPermiMapper;
+import com.ioc.datasupport.datalake.param.DlRescataStrucPermiParam;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +21,7 @@ public class DlRescataStrucPermiServiceImpl extends ServiceImpl<DlRescataStrucPe
 
     @Override
     public List<DlRescataStrucPermi> findByStructureIdInAndOwnerAccount(List<Long> structureIds, String ownerAccount) {
-        DlRescataStrucPermiParam<DlRescataStrucPermi> param =  new DlRescataStrucPermiParam<>();
+        DlRescataStrucPermiParam param =  new DlRescataStrucPermiParam();
         param.setIn_structureId(structureIds);
         param.setEq_ownerAccount(ownerAccount);
 

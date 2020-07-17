@@ -4,6 +4,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ioc.datasupport.common.MbpTablePageImpl;
 import com.ioc.datasupport.component.DataDictionaryComponent;
 import com.ioc.datasupport.component.UserComponent;
+import com.ioc.datasupport.datalake.service.DlRescataColumnService;
+import com.ioc.datasupport.datalake.service.DlRescataDatabaseService;
+import com.ioc.datasupport.datalake.service.DlRescataResourceService;
+import com.ioc.datasupport.datalake.service.DlRescataStrucPermiService;
 import com.ioc.datasupport.dataprovider.DataProvider;
 import com.ioc.datasupport.dataprovider.DataProviderManager;
 import com.ioc.datasupport.dataprovider.dto.ColumnInfo;
@@ -11,14 +15,12 @@ import com.ioc.datasupport.dataprovider.dto.DatasourceInfo;
 import com.ioc.datasupport.dataprovider.dto.TableInfo;
 import com.ioc.datasupport.dataprovider.result.*;
 import com.ioc.datasupport.util.ValidateUtil;
-import com.ioc.datasupport.warehouse.domain.DlRescataColumn;
-import com.ioc.datasupport.warehouse.domain.DlRescataDatabase;
-import com.ioc.datasupport.warehouse.domain.DlRescataResource;
-import com.ioc.datasupport.warehouse.domain.DlRescataStrucPermi;
+import com.ioc.datasupport.datalake.domain.DlRescataColumn;
+import com.ioc.datasupport.datalake.domain.DlRescataDatabase;
+import com.ioc.datasupport.datalake.domain.DlRescataResource;
+import com.ioc.datasupport.datalake.domain.DlRescataStrucPermi;
 import com.ioc.datasupport.warehouse.dto.ColumnPermInfo;
 import com.ioc.datasupport.warehouse.dto.QueryDataDTO;
-import com.openjava.framework.sys.domain.SysCode;
-import org.ljdp.component.exception.APIException;
 import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -138,6 +140,9 @@ public class WarehouseServiceImpl implements WarehouseService {
             columnPermInfo.setColumnType(columnType);
         }
 
+        // 获取脱敏规则
+
+
         return columnPermInfos;
     }
 
@@ -147,11 +152,44 @@ public class WarehouseServiceImpl implements WarehouseService {
         ValidateUtil.notNull(dbInfo, "获取仓库信息失败");
         DataProvider dataProvider = DataProviderManager.getDataProvider(new DatasourceInfo(dbInfo));
 
-        // TODO 加密脱敏
+        // 查询数据
         JdbcTemplateAggResult result = dataProvider.queryBySql(queryDataDTO.getSql());
+
+        // 设置列信息
         List<ColumnInfo> columnList = dataProvider.getColumnList(queryDataDTO.getTableName());
         List<ColumnIndex> columnIndex = columnList.stream().map(ColumnIndex::new).collect(Collectors.toList());
         result.setColumnList(columnIndex);
+
+        // 对数据加密脱敏
+        List<ColumnPermInfo> userTableColumn = this.getUserTableColumn(queryDataDTO.getTableId());
+
         return result;
+    }
+
+    /**
+     * 处理过滤及脱敏
+     *
+     * @param result
+     * @param userTableColumn
+     */
+    private void handlePermiData(JdbcTemplateAggResult result, List<ColumnPermInfo> userTableColumn) {
+        if (result == null || CollectionUtils.isEmpty(result.getData())) {
+            return;
+        }
+
+        Map<String, ColumnPermInfo> permInfoMap = userTableColumn.stream().collect(Collectors.toMap(ColumnPermInfo::getColumnSource, item -> item));
+        for (Map<String, Object> lineMap : result.getData()) {
+            for (Map.Entry<String, Object> entry : lineMap.entrySet()) {
+                String col = entry.getKey();
+                Object val = entry.getValue();
+                ColumnPermInfo permInfo = permInfoMap.get(col);
+                if (permInfo == null) {
+                    continue;
+                }
+
+                Integer isDecryption = permInfo.getIsDecryption();
+                Integer isSensitived = permInfo.getIsSensitived();
+            }
+        }
     }
 }

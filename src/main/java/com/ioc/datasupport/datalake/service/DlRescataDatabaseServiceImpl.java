@@ -1,10 +1,10 @@
-package com.ioc.datasupport.warehouse.service;
+package com.ioc.datasupport.datalake.service;
 
 import com.google.common.collect.Lists;
 import com.ioc.datasupport.component.JasyptComponent;
-import com.ioc.datasupport.warehouse.domain.DlRescataDatabase;
-import com.ioc.datasupport.warehouse.mapper.DlRescataDatabaseMapper;
-import com.ioc.datasupport.warehouse.param.DlRescataDatabaseParam;
+import com.ioc.datasupport.datalake.domain.DlRescataDatabase;
+import com.ioc.datasupport.datalake.mapper.DlRescataDatabaseMapper;
+import com.ioc.datasupport.datalake.param.DlRescataDatabaseParam;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.cache.annotation.CacheConfig;
@@ -18,8 +18,6 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 /**
  * <p>
@@ -42,7 +40,7 @@ public class DlRescataDatabaseServiceImpl extends ServiceImpl<DlRescataDatabaseM
     @Override
     @Cacheable(sync = true)
     public List<DlRescataDatabase> getRescataDataBaseList() {
-        DlRescataDatabaseParam<DlRescataDatabase> param = new DlRescataDatabaseParam<>();
+        DlRescataDatabaseParam param = new DlRescataDatabaseParam();
         ArrayList<Long> idList = Lists.newArrayList( 3L, 5L, 7L, 9L);
         param.setIn_databaseId(idList);
         List<DlRescataDatabase> dbList = this.list(param.genQueryWrapper());

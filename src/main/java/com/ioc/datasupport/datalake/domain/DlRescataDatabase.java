@@ -1,4 +1,4 @@
-package com.ioc.datasupport.warehouse.domain;
+package com.ioc.datasupport.datalake.domain;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;

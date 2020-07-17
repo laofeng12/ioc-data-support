@@ -1,9 +1,8 @@
-package com.ioc.datasupport.warehouse.service;
+package com.ioc.datasupport.datalake.service;
 
 import com.ioc.datasupport.component.UserComponent;
-import com.ioc.datasupport.warehouse.domain.DlRescataResource;
-import com.ioc.datasupport.warehouse.mapper.DlRescataResourceMapper;
-import com.ioc.datasupport.warehouse.service.DlRescataResourceService;
+import com.ioc.datasupport.datalake.domain.DlRescataResource;
+import com.ioc.datasupport.datalake.mapper.DlRescataResourceMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.ljdp.component.exception.APIException;
 import org.springframework.stereotype.Service;

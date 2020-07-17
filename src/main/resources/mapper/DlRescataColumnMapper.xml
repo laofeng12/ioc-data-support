@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ioc.datasupport.warehouse.mapper.DlRescataColumnMapper">
+<mapper namespace="com.ioc.datasupport.datalake.mapper.DlRescataColumnMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.ioc.datasupport.warehouse.domain.DlRescataColumn">
+    <resultMap id="BaseResultMap" type="com.ioc.datasupport.datalake.domain.DlRescataColumn">
         <id column="STRUCTURE_ID" property="structureId" />
         <result column="RESOURCE_ID" property="resourceId" />
         <result column="COLUMN_NAME" property="columnName" />

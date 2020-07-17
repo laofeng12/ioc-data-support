@@ -1,6 +1,7 @@
-package com.ioc.datasupport.warehouse.param;
+package com.ioc.datasupport.datalake.param;
 
 import com.ioc.datasupport.common.CommonParam;
+import com.ioc.datasupport.datalake.domain.DlRescataResource;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -12,6 +13,6 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 @ApiModel("资源信息")
 @Data
-public class DlRescataResourceParam<T> extends CommonParam<T> {
+public class DlRescataResourceParam extends CommonParam<DlRescataResource> {
 
 }
