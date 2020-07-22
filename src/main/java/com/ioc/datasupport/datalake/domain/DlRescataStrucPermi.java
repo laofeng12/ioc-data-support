@@ -3,9 +3,10 @@ package com.ioc.datasupport.datalake.domain;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
+import java.util.Date;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -24,7 +25,7 @@ import lombok.experimental.Accessors;
 @TableName("DL_RESCATA_STRUC_PERMI")
 public class DlRescataStrucPermi extends Model<DlRescataStrucPermi> {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 6361491383763034986L;
 
     /**
      * 字段权限表ID
@@ -102,7 +103,7 @@ public class DlRescataStrucPermi extends Model<DlRescataStrucPermi> {
      * 权限获取时间
      */
     @TableField("CREATE_TIME")
-    private LocalDateTime createTime;
+    private Date createTime;
 
     /**
      * 信息资源编码

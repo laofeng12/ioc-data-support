@@ -25,7 +25,7 @@ import lombok.experimental.Accessors;
 @TableName("DL_RESCATA_RESOURCE")
 public class DlRescataResource extends Model<DlRescataResource> {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -8099919856326294560L;
 
     /**
      * 资源目录宽表ID

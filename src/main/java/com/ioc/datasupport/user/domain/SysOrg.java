@@ -24,7 +24,7 @@ import lombok.experimental.Accessors;
 @TableName("SYS_ORG")
 public class SysOrg extends Model<SysOrg> {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -7911650915293803043L;
 
     /**
      * 组织ID

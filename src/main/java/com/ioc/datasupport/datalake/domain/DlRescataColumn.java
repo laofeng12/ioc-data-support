@@ -23,7 +23,7 @@ import lombok.experimental.Accessors;
 @TableName("DL_RESCATA_COLUMN")
 public class DlRescataColumn extends Model<DlRescataColumn> {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1640657941331488155L;
 
     /**
      * 资源目录结构表ID

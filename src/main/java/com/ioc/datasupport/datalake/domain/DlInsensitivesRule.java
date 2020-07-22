@@ -24,7 +24,7 @@ import lombok.experimental.Accessors;
 @TableName("DL_INSENSITIVES_RULE")
 public class DlInsensitivesRule extends Model<DlInsensitivesRule> {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -1983614098317252646L;
 
     /**
      * 脱敏规则ID

@@ -25,7 +25,7 @@ import lombok.experimental.Accessors;
 @TableName("SYS_USER")
 public class SysUser extends Model<SysUser> {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 5455708602253770272L;
 
     /**
      * 用户id

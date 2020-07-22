@@ -1,5 +1,6 @@
 package com.ioc.datasupport.warehouse.dto;
 
+import com.ioc.datasupport.datalake.domain.DlInsensitivesRule;
 import com.ioc.datasupport.dataprovider.dto.ColumnInfo;
 import com.ioc.datasupport.datalake.domain.DlRescataColumn;
 import io.swagger.annotations.ApiModel;
@@ -23,14 +24,17 @@ public class ColumnPermInfo extends ColumnInfo {
     @ApiModelProperty("列ID")
     private Long columnId;
 
-    @ApiModelProperty("是否不用加密")
-    private Integer isDecryption;
-
-    @ApiModelProperty("是否不用脱敏")
-    private Integer isSensitived;
+    @ApiModelProperty("展示类型：0:明文、1:加密、2:脱敏、3:空")
+    private Integer showType;
 
     @ApiModelProperty("字段类型code")
     private Long columnTypeCode;
+
+    @ApiModelProperty("脱敏规则ID")
+    private Long insensitivesRuleId;
+
+    @ApiModelProperty("脱敏开始与结束位置")
+    private String insensitivesStartEnd;
 
     public ColumnPermInfo(DlRescataColumn dlRescataColumn) {
         // 列ID
@@ -47,5 +51,9 @@ public class ColumnPermInfo extends ColumnInfo {
         this.setColumnScale(dlRescataColumn.getDecimalLength());
         // 字段类型code
         this.columnTypeCode = dlRescataColumn.getColumnCode();
+        // 脱敏规则ID
+        this.insensitivesRuleId = dlRescataColumn.getInsensitivesRuleId();
+        // 脱敏起终位置
+        this.insensitivesStartEnd = dlRescataColumn.getInsensitivesStartEnd();
     }
 }

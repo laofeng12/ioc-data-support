@@ -10,7 +10,7 @@ spring:
     driver-class-name: oracle.jdbc.OracleDriver
     url: jdbc:oracle:thin:@nhc.smart-info.cn:8521/dgioc
     username: datalake_rls
-    password: ch#123456
+    password: O#fviAZqOqTuK7
     druid:
       initial-size: 1
       max-active: 100
