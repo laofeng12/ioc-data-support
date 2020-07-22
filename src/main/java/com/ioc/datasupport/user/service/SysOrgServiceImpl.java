@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -33,6 +35,25 @@ public class SysOrgServiceImpl extends ServiceImpl<SysOrgMapper, SysOrg> impleme
             return Collections.emptyList();
         }
 
-        return list.stream().map(OrgInfo::new).collect(Collectors.toList());
+        List<OrgInfo> orgInfoList = list.stream().map(OrgInfo::new).collect(Collectors.toList());
+        Map<String, OrgInfo> orgInfoMap = orgInfoList.stream().collect(Collectors.toMap(OrgInfo::getOrgId, item -> item));
+        // 转换成树结构
+        for (Iterator<OrgInfo> iterator = orgInfoList.iterator(); iterator.hasNext();) {
+            OrgInfo orgInfo = iterator.next();
+            if (orgInfo.getPid() == null) {
+               continue;
+            }
+
+            OrgInfo parent = orgInfoMap.get(orgInfo.getPid());
+            if (parent == null) {
+                iterator.remove();
+                continue;
+            }
+
+            parent.getSubOrgList().add(orgInfo);
+            iterator.remove();
+        }
+
+        return orgInfoList;
     }
 }

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ioc.datasupport.user.mapper.SysResMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ioc.datasupport.user.domain.SysRes">
+        <id column="RESID" property="resid" />
+        <result column="RESNAME" property="resname" />
+        <result column="ALIAS" property="alias" />
+        <result column="SN" property="sn" />
+        <result column="ICON" property="icon" />
+        <result column="PARENTID" property="parentid" />
+        <result column="DEFAULTURL" property="defaulturl" />
+        <result column="ISFOLDER" property="isfolder" />
+        <result column="ISDISPLAYINMENU" property="isdisplayinmenu" />
+        <result column="ISOPEN" property="isopen" />
+        <result column="SYSTEMID" property="systemid" />
+        <result column="PATH" property="path" />
+        <result column="SORT" property="sort" />
+        <result column="DELETED" property="deleted" />
+        <result column="MODULE_ID" property="moduleId" />
+    </resultMap>
+
+</mapper>

@@ -22,7 +22,7 @@ public class MybatisCodeGenerator {
     /**
      * 表名数组
      */
-    public static String[] TABLE_NAME_ARRAY = new String[]{"DL_INSENSITIVES_RULE"};
+    public static String[] TABLE_NAME_ARRAY = new String[]{"sys_res"};
 
     /**
      * 模块名
@@ -30,7 +30,7 @@ public class MybatisCodeGenerator {
      * datalake 数据湖
      * user 管理系统用户模块
      */
-    public static String MODULE_NAME = "datalake";
+    public static String MODULE_NAME = "user";
 
     /**
      * 父级包名
@@ -71,10 +71,10 @@ public class MybatisCodeGenerator {
 
         // 数据源配置
         DataSourceConfig dbCfg = new DataSourceConfig();
-        dbCfg.setUrl("jdbc:oracle:thin:@nhc.smart-info.cn:8521:orcl");
+        dbCfg.setUrl("jdbc:oracle:thin:@nhc.smart-info.cn:8521/dgioc");
         dbCfg.setDriverName("oracle.jdbc.OracleDriver");
-        dbCfg.setUsername("c##dgioc");
-        dbCfg.setPassword("bigdata@0769");
+        dbCfg.setUsername("datalake_rls");
+        dbCfg.setPassword("O#fviAZqOqTuK7");
         dbCfg.setDbType(DbType.ORACLE);
         dbCfg.setDbQuery(new OracleQuery());
         dbCfg.setTypeConvert(new OracleTypeConvert());

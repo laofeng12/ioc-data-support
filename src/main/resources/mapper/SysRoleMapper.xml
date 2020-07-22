@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ioc.datasupport.user.mapper.SysRoleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ioc.datasupport.user.domain.SysRole">
+        <id column="ROLEID" property="roleid" />
+        <result column="SYSTEMID" property="systemid" />
+        <result column="ALIAS" property="alias" />
+        <result column="ROLENAME" property="rolename" />
+        <result column="MEMO" property="memo" />
+        <result column="ALLOWDEL" property="allowdel" />
+        <result column="ALLOWEDIT" property="allowedit" />
+        <result column="ENABLED" property="enabled" />
+        <result column="DELETED" property="deleted" />
+        <result column="CREATORID" property="creatorid" />
+        <result column="CREATETIME" property="createtime" />
+        <result column="UPDATEID" property="updateid" />
+        <result column="UPDATETIME" property="updatetime" />
+        <result column="ROLE_TYPE" property="roleType" />
+        <result column="IS_BUILD_IN" property="isBuildIn" />
+    </resultMap>
+
+</mapper>
