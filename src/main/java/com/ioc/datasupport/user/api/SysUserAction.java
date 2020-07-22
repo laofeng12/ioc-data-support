@@ -2,14 +2,8 @@ package com.ioc.datasupport.user.api;
 
 
 import com.ioc.datasupport.common.PublicConstant;
-import com.ioc.datasupport.user.dto.OrgInfo;
-import com.ioc.datasupport.user.dto.ResInfo;
-import com.ioc.datasupport.user.dto.RoleInfo;
-import com.ioc.datasupport.user.dto.UserInfo;
-import com.ioc.datasupport.user.service.SysOrgService;
-import com.ioc.datasupport.user.service.SysResService;
-import com.ioc.datasupport.user.service.SysRoleService;
-import com.ioc.datasupport.user.service.SysUserService;
+import com.ioc.datasupport.user.dto.*;
+import com.ioc.datasupport.user.service.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.ljdp.component.result.DataApiResponse;
@@ -47,6 +41,12 @@ public class SysUserAction {
 
     @Resource
     private SysResService sysResService;
+
+    @Resource
+    private SysUserRoleService sysUserRoleService;
+
+    @Resource
+    private SysRoleResService sysRoleResService;
 
     /**
      * 获取用户信息，给其他平台同步用（由于OA系统的存在，所以可能同步频率较高）
@@ -106,8 +106,26 @@ public class SysUserAction {
         return resp;
     }
 
-    // 用户--角色
+    @ApiOperation(value = "用户角色关系信息", notes = "用户角色关系信息", nickname = "userRoleInfos")
+    @Security(session = false)
+    @RequestMapping(value = "/userRoleInfos", method = RequestMethod.GET)
+    public DataApiResponse<UserRoleInfo> getUserRoleInfos(){
+        List<UserRoleInfo> userRoleInfos = sysUserRoleService.getUserRoleInfos();
+        DataApiResponse<UserRoleInfo> resp = new DataApiResponse<>();
+        resp.setRows(userRoleInfos);
 
-    // 角色--资源
+        return resp;
+    }
+
+    @ApiOperation(value = "角色资源权限信息", notes = "角色资源权限信息", nickname = "roleResInfos")
+    @Security(session = false)
+    @RequestMapping(value = "/roleResInfos", method = RequestMethod.GET)
+    public DataApiResponse<RoleResInfo> getRoleResInfos(){
+        List<RoleResInfo> roleResInfos = sysRoleResService.getRoleResInfos();
+        DataApiResponse<RoleResInfo> resp = new DataApiResponse<>();
+        resp.setRows(roleResInfos);
+
+        return resp;
+    }
 
 }
