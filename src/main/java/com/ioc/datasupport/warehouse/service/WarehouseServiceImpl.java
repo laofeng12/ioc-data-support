@@ -20,6 +20,7 @@ import com.ioc.datasupport.util.ValidateUtil;
 import com.ioc.datasupport.warehouse.dto.ColumnPermInfo;
 import com.ioc.datasupport.warehouse.dto.ColumnPermUseInfo;
 import com.ioc.datasupport.warehouse.dto.QueryDataDTO;
+import org.apache.commons.lang3.StringUtils;
 import org.checkerframework.checker.units.qual.C;
 import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.cache.annotation.CacheConfig;
@@ -269,10 +270,16 @@ public class WarehouseServiceImpl implements WarehouseService {
                     continue;
                 }
 
-                // 脱敏 TODO
+                // 脱敏
                 String insensitivesStartEnd = permInfo.getInsensitivesStartEnd();
-                DlInsensitivesRule insensitivesRule = permInfo.getInsensitivesRule();
-                Object valObj = InsensitivesUtil.insensitiveColumn(insensitivesRule, String.valueOf(val));
+                String valStr = String.valueOf(val);
+                if (StringUtils.isNotBlank(valStr)) {
+                    StringBuilder sb = new StringBuilder(valStr);
+                    valStr = sb.append(",").append(insensitivesStartEnd).toString();
+                }
+
+                // 进行脱敏
+                Object valObj = InsensitivesUtil.insensitiveColumn(permInfo.getInsensitivesRule(), valStr);
                 entry.setValue(valObj);
             }
         }
